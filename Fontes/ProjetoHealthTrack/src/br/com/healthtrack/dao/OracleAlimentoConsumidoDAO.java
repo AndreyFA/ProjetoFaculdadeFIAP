@@ -1,5 +1,7 @@
 package br.com.healthtrack.dao;
 
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import br.com.healthtrack.dao.interfaces.AlimentoConsumidoDAO;
@@ -7,34 +9,152 @@ import br.com.healthtrack.model.AlimentoConsumido;
 
 public class OracleAlimentoConsumidoDAO implements AlimentoConsumidoDAO {
 
+	private Connection connection;
+	
+	public void constructor() {
+		this.connection = ConnectionManager.getInstance().getConnection();
+	}
+	
 	@Override
 	public ArrayList<AlimentoConsumido> obterTodos() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		ArrayList<AlimentoConsumido> alimentosConsumidos = new ArrayList<AlimentoConsumido>();
+		
+		try {
+			
+			String sql = ""
+					+ "SELECT * "
+					+ "FROM T_HLT_ALIMENT_CONSUMIDO;";
+			
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(sql);
+			
+			while(resultSet.next()) {				
+				AlimentoConsumido alimentoConsumido = new AlimentoConsumido();
+				alimentoConsumido.setCalorias(resultSet.getInt("NR_CALORIAS"));
+				alimentoConsumido.setHorario(LocalDateTime.parse(resultSet.getDate("HR_REFEICAO").toString()));
+				alimentoConsumido.setDescricao(resultSet.getString("DS_REFEICAO"));
+				alimentoConsumido.setTipo(new OracleTipoRefeicaoDAO().obterPorId(resultSet.getInt("CD_TIPO_REFEICAO")));
+				alimentoConsumido.setUsuario(new OracleUsuarioDAO().obterPorId(resultSet.getInt("CD_USUARO")));			
+				
+				alimentosConsumidos.add(alimentoConsumido);
+			}		
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+		
+		return alimentosConsumidos;
 	}
 
 	@Override
 	public AlimentoConsumido obterPorId(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		AlimentoConsumido alimentoConsumido = null;
+		
+		try {
+			String sql = ""
+					+ "SELECT * "
+					+ "FROM T_HLT_ALIMENT_CONSUMIDO "
+					+ "WHERE CD_ALIMENTO_CONSUMIDO = ? ";
+			
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setInt(1, id);
+			
+			ResultSet resultSet = statement.executeQuery();					
+			
+			while(resultSet.next()) {				
+				alimentoConsumido = new AlimentoConsumido();
+				alimentoConsumido.setCalorias(resultSet.getInt("NR_CALORIAS"));
+				alimentoConsumido.setHorario(LocalDateTime.parse(resultSet.getDate("HR_REFEICAO").toString()));
+				alimentoConsumido.setDescricao(resultSet.getString("DS_REFEICAO"));
+				alimentoConsumido.setTipo(new OracleTipoRefeicaoDAO().obterPorId(resultSet.getInt("CD_TIPO_REFEICAO")));
+				alimentoConsumido.setUsuario(new OracleUsuarioDAO().obterPorId(resultSet.getInt("CD_USUARO")));
+				break;
+			}		
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+		
+		return alimentoConsumido;
 	}
 
 	@Override
 	public void cadastrar(AlimentoConsumido entidade) {
-		// TODO Auto-generated method stub
-		
+		try {
+			String sql = ""
+					+ "INSERT INTO T_HLT_ALIMENTO_CONSUMIDO ("
+					+ "CD_ALIMENTO_CONSUMIDO,"
+					+ "NR_CALORIAS,"
+					+ "HR_REFEICAO,"
+					+ "DS_REFEICAO,"
+					+ "CD_TIPO_REFEICAO,"
+					+ "CD_USUARIO)"
+					+ "VALUES ("
+					+ "SQ_ALIMENTO_CONSUMIDO.NEXTVAL,"
+					+ "?,"
+					+ "TO_DATE(?),"
+					+ "?,"
+					+ "?,"
+					+ "?);";
+			
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setDouble(1, entidade.getCalorias());
+			statement.setString(2, entidade.getHorario().toString());
+			statement.setString(3, entidade.getDescricao());
+			statement.setInt(4, entidade.getTipo().getCodigo());
+			statement.setInt(5, entidade.getUsuario().getCodigo());
+			
+			statement.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
 	}
 
 	@Override
 	public void atualizar(AlimentoConsumido entidade) {
-		// TODO Auto-generated method stub
+		try {
+			String sql = ""
+					+ "UPDATE T_HLT_ALIMENTO_CONSUMIDO SET "
+					+ "NR_CALORIAS = ?,"
+					+ "HR_REFEICAO = ?,"
+					+ "DS_REFEICAO = ?,"
+					+ "CD_TIPO_REFEICAO = ?,"
+					+ "CD_USUARIO = ? "
+					+ "WHERE CD_ALIMENTO_CONSUMIDO = ?;";
+			
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setDouble(1, entidade.getCalorias());
+			statement.setString(2, entidade.getHorario().toString());
+			statement.setString(3, entidade.getDescricao());
+			statement.setInt(4, entidade.getTipo().getCodigo());
+			statement.setInt(5, entidade.getUsuario().getCodigo());
+			statement.setInt(6, entidade.getCodigo());
+			
+			statement.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 
 	@Override
 	public void deletar(int id) {
-		// TODO Auto-generated method stub
-		
+		try {
+			String sql = ""
+					+ "DELETE FROM T_HLT_ALIMENTO_CONSUMIDO"
+					+ "WHERE CD_ALIMENTO_CONSUMIDO = ?";
+			
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setInt(1, id);
+			
+			statement.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
 	}
-
 }
