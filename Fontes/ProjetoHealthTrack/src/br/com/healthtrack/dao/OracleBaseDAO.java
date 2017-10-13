@@ -22,13 +22,14 @@ public abstract class OracleBaseDAO<T> {
 		return resultSet;
 	}
 	
-	protected void persistir(PreparedStatement statement) {
+	protected void persistir(PreparedStatement statement) throws SQLException {
 		try {
 			this.connection.setAutoCommit(false);
 			statement.executeUpdate();
 			this.connection.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
+			this.connection.rollback();
 		}
 	}
 }

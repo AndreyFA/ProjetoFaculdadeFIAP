@@ -2,7 +2,7 @@ package br.com.healthtrack.dao;
 
 import br.com.healthtrack.dao.interfaces.*;
 
-public abstract class DAOFactory {
+public final class DAOFactory {
 	
 	public static AlimentoConsumidoDAO getAlimentoConsumidoDAO() {
 		return new OracleAlimentoConsumidoDAO();
