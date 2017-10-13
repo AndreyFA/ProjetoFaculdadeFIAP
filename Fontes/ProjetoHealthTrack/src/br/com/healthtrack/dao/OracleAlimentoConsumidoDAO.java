@@ -1,11 +1,11 @@
 package br.com.healthtrack.dao;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import br.com.healthtrack.dao.interfaces.AlimentoConsumidoDAO;
 import br.com.healthtrack.model.AlimentoConsumido;
+import br.com.healthtrack.utils.DateUtils;
 
 public class OracleAlimentoConsumidoDAO extends OracleBaseDAO<AlimentoConsumido> implements AlimentoConsumidoDAO {
 	
@@ -30,7 +30,7 @@ public class OracleAlimentoConsumidoDAO extends OracleBaseDAO<AlimentoConsumido>
 			while(resultSet.next()) {				
 				AlimentoConsumido alimentoConsumido = new AlimentoConsumido();
 				alimentoConsumido.setCalorias(resultSet.getInt("NR_CALORIAS"));
-				alimentoConsumido.setHorario(LocalDateTime.parse(resultSet.getDate("HR_REFEICAO").toString()));
+				alimentoConsumido.setHorario(DateUtils.asLocalDateTime(resultSet.getDate("HR_REFEICAO")));
 				alimentoConsumido.setDescricao(resultSet.getString("DS_REFEICAO"));
 				alimentoConsumido.setTipo(new OracleTipoRefeicaoDAO().obterPorId(resultSet.getInt("CD_TIPO_REFEICAO")));
 				alimentoConsumido.setUsuario(new OracleUsuarioDAO().obterPorId(resultSet.getInt("CD_USUARO")));			
@@ -64,7 +64,7 @@ public class OracleAlimentoConsumidoDAO extends OracleBaseDAO<AlimentoConsumido>
 			while(resultSet.next()) {				
 				alimentoConsumido = new AlimentoConsumido();
 				alimentoConsumido.setCalorias(resultSet.getInt("NR_CALORIAS"));
-				alimentoConsumido.setHorario(LocalDateTime.parse(resultSet.getDate("HR_REFEICAO").toString()));
+				alimentoConsumido.setHorario(DateUtils.asLocalDateTime(resultSet.getDate("HR_REFEICAO")));
 				alimentoConsumido.setDescricao(resultSet.getString("DS_REFEICAO"));
 				alimentoConsumido.setTipo(new OracleTipoRefeicaoDAO().obterPorId(resultSet.getInt("CD_TIPO_REFEICAO")));
 				alimentoConsumido.setUsuario(new OracleUsuarioDAO().obterPorId(resultSet.getInt("CD_USUARO")));
@@ -99,7 +99,7 @@ public class OracleAlimentoConsumidoDAO extends OracleBaseDAO<AlimentoConsumido>
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setDouble(1, entidade.getCalorias());
-			statement.setString(2, entidade.getHorario().toString());
+			statement.setDate(2, DateUtils.asSqlDate(entidade.getHorario()));
 			statement.setString(3, entidade.getDescricao());
 			statement.setInt(4, entidade.getTipo().getCodigo());
 			statement.setInt(5, entidade.getUsuario().getCodigo());
@@ -125,7 +125,7 @@ public class OracleAlimentoConsumidoDAO extends OracleBaseDAO<AlimentoConsumido>
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setDouble(1, entidade.getCalorias());
-			statement.setString(2, entidade.getHorario().toString());
+			statement.setDate(2, DateUtils.asSqlDate(entidade.getHorario()));
 			statement.setString(3, entidade.getDescricao());
 			statement.setInt(4, entidade.getTipo().getCodigo());
 			statement.setInt(5, entidade.getUsuario().getCodigo());
