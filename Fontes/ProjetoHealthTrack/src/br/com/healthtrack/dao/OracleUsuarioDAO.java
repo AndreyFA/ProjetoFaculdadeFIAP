@@ -10,7 +10,7 @@ import br.com.healthtrack.model.Usuario;
 public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioDAO {
 	
 	public OracleUsuarioDAO() {
-		super.constructor();
+		super();
 	}
 	
 	@Override
@@ -46,7 +46,7 @@ public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioD
 
 	@Override
 	public Usuario obterPorId(int id) {
-		Usuario usuario = new Usuario();
+		Usuario usuario = null;
 		
 		String sql = ""
 				+ "SELECT * "

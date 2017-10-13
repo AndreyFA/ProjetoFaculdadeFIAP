@@ -6,7 +6,7 @@ public abstract class OracleBaseDAO<T> {
 	
 	protected Connection connection;
 	
-	protected void constructor() {
+	protected OracleBaseDAO() {
 		this.connection = ConnectionManager.getInstance().getConnection();
 	}
 

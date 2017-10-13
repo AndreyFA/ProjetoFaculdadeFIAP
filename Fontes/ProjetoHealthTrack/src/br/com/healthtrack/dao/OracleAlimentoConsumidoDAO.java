@@ -7,12 +7,10 @@ import java.util.ArrayList;
 import br.com.healthtrack.dao.interfaces.AlimentoConsumidoDAO;
 import br.com.healthtrack.model.AlimentoConsumido;
 
-public class OracleAlimentoConsumidoDAO implements AlimentoConsumidoDAO {
-
-	private Connection connection;
+public class OracleAlimentoConsumidoDAO extends OracleBaseDAO<AlimentoConsumido> implements AlimentoConsumidoDAO {
 	
-	public void constructor() {
-		this.connection = ConnectionManager.getInstance().getConnection();
+	public OracleAlimentoConsumidoDAO() {
+		super();
 	}
 	
 	@Override
@@ -26,8 +24,8 @@ public class OracleAlimentoConsumidoDAO implements AlimentoConsumidoDAO {
 					+ "SELECT * "
 					+ "FROM T_HLT_ALIMENT_CONSUMIDO;";
 			
-			Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery(sql);
+			PreparedStatement statement = super.connection.prepareStatement(sql);
+			ResultSet resultSet = super.executarBusca(statement);
 			
 			while(resultSet.next()) {				
 				AlimentoConsumido alimentoConsumido = new AlimentoConsumido();
@@ -58,10 +56,10 @@ public class OracleAlimentoConsumidoDAO implements AlimentoConsumidoDAO {
 					+ "FROM T_HLT_ALIMENT_CONSUMIDO "
 					+ "WHERE CD_ALIMENTO_CONSUMIDO = ? ";
 			
-			PreparedStatement statement = connection.prepareStatement(sql);
+			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setInt(1, id);
 			
-			ResultSet resultSet = statement.executeQuery();					
+			ResultSet resultSet = super.executarBusca(statement);					
 			
 			while(resultSet.next()) {				
 				alimentoConsumido = new AlimentoConsumido();
@@ -99,14 +97,14 @@ public class OracleAlimentoConsumidoDAO implements AlimentoConsumidoDAO {
 					+ "?,"
 					+ "?);";
 			
-			PreparedStatement statement = connection.prepareStatement(sql);
+			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setDouble(1, entidade.getCalorias());
 			statement.setString(2, entidade.getHorario().toString());
 			statement.setString(3, entidade.getDescricao());
 			statement.setInt(4, entidade.getTipo().getCodigo());
 			statement.setInt(5, entidade.getUsuario().getCodigo());
 			
-			statement.executeUpdate();
+			super.persistir(statement);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -125,7 +123,7 @@ public class OracleAlimentoConsumidoDAO implements AlimentoConsumidoDAO {
 					+ "CD_USUARIO = ? "
 					+ "WHERE CD_ALIMENTO_CONSUMIDO = ?;";
 			
-			PreparedStatement statement = connection.prepareStatement(sql);
+			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setDouble(1, entidade.getCalorias());
 			statement.setString(2, entidade.getHorario().toString());
 			statement.setString(3, entidade.getDescricao());
@@ -133,7 +131,7 @@ public class OracleAlimentoConsumidoDAO implements AlimentoConsumidoDAO {
 			statement.setInt(5, entidade.getUsuario().getCodigo());
 			statement.setInt(6, entidade.getCodigo());
 			
-			statement.executeUpdate();
+			super.persistir(statement);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -148,10 +146,10 @@ public class OracleAlimentoConsumidoDAO implements AlimentoConsumidoDAO {
 					+ "DELETE FROM T_HLT_ALIMENTO_CONSUMIDO"
 					+ "WHERE CD_ALIMENTO_CONSUMIDO = ?";
 			
-			PreparedStatement statement = connection.prepareStatement(sql);
+			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setInt(1, id);
 			
-			statement.executeUpdate();
+			super.persistir(statement);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
