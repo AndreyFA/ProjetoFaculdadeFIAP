@@ -20,13 +20,14 @@ public class OracleTipoAtividadeFisicaDAO extends OracleBaseDAO<TipoAtividadeFis
 		try {
 			String sql = ""
 					+ "SELECT * "
-					+ "FROM T_HLT_TIPO_ATIVIDADE_FISICA;";
+					+ "FROM T_HLT_TIPO_ATIVIDADE_FISICA";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			ResultSet resultSet = super.executarBusca(statement);
 			
 			while (resultSet.next()) {
 				TipoAtividadeFisica tipoAtividadeFisica = new TipoAtividadeFisica();
+				tipoAtividadeFisica.setCodigo(resultSet.getInt("CD_TIPO_ATIVIDADE_FISICA"));
 				tipoAtividadeFisica.setNome(resultSet.getString("NM_ATIVIDADE_FISICA"));
 				
 				tiposAtividadeFisica.add(tipoAtividadeFisica);
@@ -47,7 +48,7 @@ public class OracleTipoAtividadeFisicaDAO extends OracleBaseDAO<TipoAtividadeFis
 			String sql = ""
 					+ "SELECT * "
 					+ "FROM T_HLT_TIPO_ATIVIDADE_FISICA "
-					+ "WHERE CD_TIPO_ATIVIDADE_FISICA = ?;";
+					+ "WHERE CD_TIPO_ATIVIDADE_FISICA = ?";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setInt(1, id);
@@ -56,6 +57,7 @@ public class OracleTipoAtividadeFisicaDAO extends OracleBaseDAO<TipoAtividadeFis
 			
 			while (resultSet.next()) {
 				tipoAtividadeFisica = new TipoAtividadeFisica();
+				tipoAtividadeFisica.setCodigo(resultSet.getInt("CD_TIPO_ATIVIDADE_FISICA"));
 				tipoAtividadeFisica.setNome(resultSet.getString("NM_ATIVIDADE_FISICA"));
 				
 				break;
@@ -77,7 +79,7 @@ public class OracleTipoAtividadeFisicaDAO extends OracleBaseDAO<TipoAtividadeFis
 					+ "NM_ATIVIDADE_FISICA) "
 					+ "VALUES ("
 					+ "SQ_TIPO_ATIVIDADE_FISICA.NEXTVAL,"
-					+ "?);";
+					+ "?)";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setString(1, entidade.getNome());
@@ -95,7 +97,7 @@ public class OracleTipoAtividadeFisicaDAO extends OracleBaseDAO<TipoAtividadeFis
 			String sql = ""
 					+ "UPDATE T_HLT_TIPO_ATIVIDADE_FISICA SET"
 					+ "NM_ATIVIDADE_FISICA = ? "
-					+ "WHERE CD_TIPO_ATIVIDADE_FISICA = ?;";
+					+ "WHERE CD_TIPO_ATIVIDADE_FISICA = ?";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setString(1, entidade.getNome());
@@ -113,7 +115,7 @@ public class OracleTipoAtividadeFisicaDAO extends OracleBaseDAO<TipoAtividadeFis
 		try {
 			String sql = ""
 					+ "DELETE FROM T_HLT_TIPO_ATIVIDADE_FISICA "
-					+ "WHERE CD_TIPO_ATIVIDADE_FISICA = ?;";
+					+ "WHERE CD_TIPO_ATIVIDADE_FISICA = ?";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setInt(1, id);

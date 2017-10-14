@@ -20,6 +20,10 @@ public class DateUtils {
 		return java.sql.Date.valueOf(localDateTime.toLocalDate());
 	}
 	
+	public static java.sql.Date asSqlDate(LocalDate localDate) {
+		return java.sql.Date.valueOf(localDate);
+	}
+	
 	public static LocalDate asLocalDate(Date date) {
 		return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
 	}

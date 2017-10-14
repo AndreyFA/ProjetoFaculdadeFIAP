@@ -21,13 +21,14 @@ public class OraclePressaoArterialDAO extends OracleBaseDAO<PressaoArterial> imp
 		try {
 			String sql = ""
 					+ "SELECT * "
-					+ "FROM T_HLT_PRESSAO_ARTERIAL;";
+					+ "FROM T_HLT_PRESSAO_ARTERIAL";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			ResultSet resultSet = super.executarBusca(statement);
 			
 			while (resultSet.next()) {
 				PressaoArterial pressaoArterial = new PressaoArterial();
+				pressaoArterial.setCodigo(resultSet.getInt("CD_PRESSAO_ARTERIAL"));
 				pressaoArterial.setPressaoSistolica(resultSet.getInt("VL_PRESSAO_SISTOLICA"));
 				pressaoArterial.setPressaoDiastolica(resultSet.getInt("VL_PRESSAO_DIASTOLICA"));
 				pressaoArterial.setData(LocalDate.parse(resultSet.getString("DT_MEDICAO")));
@@ -51,7 +52,7 @@ public class OraclePressaoArterialDAO extends OracleBaseDAO<PressaoArterial> imp
 			String sql = ""
 					+ "SELECT * "
 					+ "FROM T_HLT_PRESSAO_ARTERIAL "
-					+ "WHERE CD_PRESSAO_ARTERIAL = ?;";
+					+ "WHERE CD_PRESSAO_ARTERIAL = ?";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setInt(1, id);
@@ -60,6 +61,7 @@ public class OraclePressaoArterialDAO extends OracleBaseDAO<PressaoArterial> imp
 			
 			while (resultSet.next()) {
 				pressaoArterial = new PressaoArterial();
+				pressaoArterial.setCodigo(resultSet.getInt("CD_PRESSAO_ARTERIAL"));
 				pressaoArterial.setPressaoSistolica(resultSet.getInt("VL_PRESSAO_SISTOLICA"));
 				pressaoArterial.setPressaoDiastolica(resultSet.getInt("VL_PRESSAO_DIASTOLICA"));
 				pressaoArterial.setData(LocalDate.parse(resultSet.getString("DT_MEDICAO")));
@@ -92,7 +94,7 @@ public class OraclePressaoArterialDAO extends OracleBaseDAO<PressaoArterial> imp
 					+ "?,"
 					+ "TO_DATE(?),"
 					+ "?,"
-					+ "?);";
+					+ "?)";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setInt(1, entidade.getPressaoSistolica());
@@ -118,7 +120,7 @@ public class OraclePressaoArterialDAO extends OracleBaseDAO<PressaoArterial> imp
 					+ "DT_MEDICAO = TO_DATE(?),"
 					+ "DS_SITUACAO = ?,"
 					+ "CD_USUARIO = ? "
-					+ "WHERE CD_PRESSAO_ARTERIAL = ?;";
+					+ "WHERE CD_PRESSAO_ARTERIAL = ?";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setInt(1, entidade.getPressaoSistolica());
@@ -139,7 +141,7 @@ public class OraclePressaoArterialDAO extends OracleBaseDAO<PressaoArterial> imp
 		try {
 			String sql = ""
 					+ "DELETE FROM T_HLT_PRESSAO_ARTERIAL "
-					+ "WHERE CD_PRESSAO_ARTERIAL = ?;";
+					+ "WHERE CD_PRESSAO_ARTERIAL = ?";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setInt(1, id);

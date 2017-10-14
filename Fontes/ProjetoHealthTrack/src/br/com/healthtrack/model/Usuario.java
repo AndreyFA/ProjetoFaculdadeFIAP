@@ -31,7 +31,7 @@ public class Usuario extends Persistivel<Usuario> implements Serializable {
 	/***
 	 * Gênero sexual do usuário. M ou F.
 	 */
-	private char genero;
+	private String genero;
 	
 	/***
 	 * E-mail de contato do usuário.
@@ -60,7 +60,7 @@ public class Usuario extends Persistivel<Usuario> implements Serializable {
 	 * @param email E-mail de contato do usuário.
 	 * @param senha Senha de acesso do usuário.
 	 */
-	public Usuario(String nomeCompleto, LocalDate dataNascimento, float altura, char genero, String email, String senha) {
+	public Usuario(String nomeCompleto, LocalDate dataNascimento, float altura, String genero, String email, String senha) {
 		setNomeCompleto(nomeCompleto);
 		setDataNascimento(dataNascimento);
 		setAltura(altura);
@@ -133,7 +133,7 @@ public class Usuario extends Persistivel<Usuario> implements Serializable {
 	 * Retorna o gênero sexual do usuário.
 	 * @return Gênero sexual do usuário.
 	 */
-	public char getGenero() {
+	public String getGenero() {
 		return genero;
 	}
 	
@@ -142,9 +142,9 @@ public class Usuario extends Persistivel<Usuario> implements Serializable {
 	 * @param genero Gênero sexual do usuário.
 	 * @throws InvalidParameterException Não é permitido um gênero diferente de M ou F.
 	 */
-	public void setGenero(char genero) throws InvalidParameterException {
+	public void setGenero(String genero) throws InvalidParameterException {
 		
-		if(genero != 'M' && genero != 'F') {
+		if(genero.toUpperCase() != "M" && genero.toUpperCase() != "F") {
 			throw new InvalidParameterException("Informe um gênero válido.");
 		}
 		

@@ -20,13 +20,14 @@ public class OracleTipoRefeicaoDAO extends OracleBaseDAO<TipoRefeicao> implement
 		try {
 			String sql = ""
 					+ "SELECT * "
-					+ "FROM T_HLT_TIPO_REFEICAO;";
+					+ "FROM T_HLT_TIPO_REFEICAO";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			ResultSet resultSet = super.executarBusca(statement);
 			
 			while (resultSet.next()) {
 				TipoRefeicao tipoRefeicao = new TipoRefeicao();
+				tipoRefeicao.setCodigo(resultSet.getInt("CD_TIPO_REFEICAO"));
 				tipoRefeicao.setNome(resultSet.getString("NM_REFEICAO"));
 				
 				tiposRefeicao.add(tipoRefeicao);
@@ -47,7 +48,7 @@ public class OracleTipoRefeicaoDAO extends OracleBaseDAO<TipoRefeicao> implement
 			String sql = ""
 					+ "SELECT * "
 					+ "FROM T_HLT_TIPO_REFEICAO "
-					+ "WHERE CD_TIPO_REFEICAO = ?;";
+					+ "WHERE CD_TIPO_REFEICAO = ?";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setInt(1, id);
@@ -56,6 +57,7 @@ public class OracleTipoRefeicaoDAO extends OracleBaseDAO<TipoRefeicao> implement
 			
 			while (resultSet.next()) {
 				tipoRefeicao = new TipoRefeicao();
+				tipoRefeicao.setCodigo(resultSet.getInt("CD_TIPO_REFEICAO"));
 				tipoRefeicao.setNome(resultSet.getString("NM_REFEICAO"));
 				
 				break;
@@ -77,7 +79,7 @@ public class OracleTipoRefeicaoDAO extends OracleBaseDAO<TipoRefeicao> implement
 					+ "NM_REFEICAO) "
 					+ "VALUES ("
 					+ "SQ_TIPO_REFEICAO.NEXTVAL,"
-					+ "?);";
+					+ "?)";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setString(1, entidade.getNome());
@@ -95,7 +97,7 @@ public class OracleTipoRefeicaoDAO extends OracleBaseDAO<TipoRefeicao> implement
 			String sql = ""
 					+ "UPDATE T_HLT_TIPO_REFEICAO SET "
 					+ "NM_REFEICAO = ? "
-					+ "WHERE CD_TIPO_REFEICAO = ?;";
+					+ "WHERE CD_TIPO_REFEICAO = ?";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setString(1, entidade.getNome());
@@ -113,7 +115,7 @@ public class OracleTipoRefeicaoDAO extends OracleBaseDAO<TipoRefeicao> implement
 		try {
 			String sql = ""
 					+ "DELETE FROM T_HLT_TIPO_REFEICAO "
-					+ "WHERE CD_TIPO_REFEICAO = ?;";
+					+ "WHERE CD_TIPO_REFEICAO = ?";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setInt(1, id);

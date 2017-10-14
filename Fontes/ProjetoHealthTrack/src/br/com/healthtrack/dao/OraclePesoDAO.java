@@ -21,13 +21,14 @@ public class OraclePesoDAO extends OracleBaseDAO<Peso> implements PesoDAO {
 		try {
 			String sql = ""
 					+ "SELECT * "
-					+ "FROM T_HLT_PESO;";
+					+ "FROM T_HLT_PESO";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			ResultSet resultSet = super.executarBusca(statement);
 			
 			while (resultSet.next()) {
 				Peso peso = new Peso();
+				peso.setCodigo(resultSet.getInt("CD_PESO"));
 				peso.setPeso(resultSet.getFloat("VL_PESO"));
 				peso.setData(LocalDate.parse(resultSet.getString("DT_PESO")));
 				peso.setUsuario(DAOFactory.getUsuarioDAO().obterPorId(resultSet.getInt("CD_USUARIO")));
@@ -49,7 +50,7 @@ public class OraclePesoDAO extends OracleBaseDAO<Peso> implements PesoDAO {
 			String sql = ""
 					+ "SELECT * "
 					+ "FROM T_HLT_PESO "
-					+ "WHERE CD_PESO = ?;";
+					+ "WHERE CD_PESO = ?";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setInt(1, id);
@@ -58,6 +59,7 @@ public class OraclePesoDAO extends OracleBaseDAO<Peso> implements PesoDAO {
 			
 			while (resultSet.next()) {
 				peso = new Peso();
+				peso.setCodigo(resultSet.getInt("CD_PESO"));
 				peso.setPeso(resultSet.getFloat("VL_PESO"));
 				peso.setData(LocalDate.parse(resultSet.getString("DT_PESO")));
 				peso.setUsuario(DAOFactory.getUsuarioDAO().obterPorId(resultSet.getInt("CD_USUARIO")));
@@ -84,7 +86,7 @@ public class OraclePesoDAO extends OracleBaseDAO<Peso> implements PesoDAO {
 					+ "SQ_PESO.NEXTVAL,"
 					+ "?,"
 					+ "TO_DATE(?),"
-					+ "?);";
+					+ "?)";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setInt(1, entidade.getCodigo());
@@ -106,7 +108,7 @@ public class OraclePesoDAO extends OracleBaseDAO<Peso> implements PesoDAO {
 					+ "VL_PESO = ?,"
 					+ "DT_PESO = TO_DATE(2),"
 					+ "CD_USUARIO = ? "
-					+ "WHERE CD_PESO = ?;";
+					+ "WHERE CD_PESO = ?";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setFloat(1, entidade.getPeso());
@@ -127,7 +129,7 @@ public class OraclePesoDAO extends OracleBaseDAO<Peso> implements PesoDAO {
 		try {
 			String sql = ""
 					+ "DELETE FROM T_HLT_PESO "
-					+ "WHERE CD_PESO = ?;";
+					+ "WHERE CD_PESO = ?";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setInt(1, id);

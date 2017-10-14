@@ -22,13 +22,14 @@ public class OracleAtividadeFisicaDAO extends OracleBaseDAO<AtividadeFisica> imp
 		try {
 			String sql = ""
 					+ "SELECT *"
-					+ "FROM T_HLT_ATIVIDADE_FISICA;";
+					+ "FROM T_HLT_ATIVIDADE_FISICA";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			ResultSet resultSet = super.executarBusca(statement);
 			
 			while (resultSet.next()) {
 				AtividadeFisica atividadeFisica = new AtividadeFisica();
+				atividadeFisica.setCodigo(resultSet.getInt("CD_ATIVIDADE_FISICA"));
 				atividadeFisica.setCalorias(resultSet.getInt("NR_CALORIAS"));
 				atividadeFisica.setData(LocalDate.parse(resultSet.getString("DT_ATIVIDADE")));
 				atividadeFisica.setHorario(LocalTime.parse(resultSet.getString("HR_ATIVIDADE")));
@@ -54,7 +55,7 @@ public class OracleAtividadeFisicaDAO extends OracleBaseDAO<AtividadeFisica> imp
 			String sql = ""
 					+ "SELECT *"
 					+ "FROM T_HLT_ATIVIDADE_FISICA"
-					+ "WHERE CD_ATIVIDADE_FISICA = ?;";
+					+ "WHERE CD_ATIVIDADE_FISICA = ?";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setInt(1, id);
@@ -63,6 +64,7 @@ public class OracleAtividadeFisicaDAO extends OracleBaseDAO<AtividadeFisica> imp
 			
 			while (resultSet.next()) {
 				atividadeFisica = new AtividadeFisica();
+				atividadeFisica.setCodigo(resultSet.getInt("CD_ATIVIDADE_FISICA"));
 				atividadeFisica.setCalorias(resultSet.getInt("NR_CALORIAS"));
 				atividadeFisica.setData(LocalDate.parse(resultSet.getString("DT_ATIVIDADE")));
 				atividadeFisica.setHorario(LocalTime.parse(resultSet.getString("HR_ATIVIDADE")));
@@ -99,7 +101,7 @@ public class OracleAtividadeFisicaDAO extends OracleBaseDAO<AtividadeFisica> imp
 					+ "TO_TIMESTAMP(?),"
 					+ "?"
 					+ "?"
-					+ "?);";
+					+ "?)";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setInt(1, entidade.getCalorias());
@@ -127,7 +129,7 @@ public class OracleAtividadeFisicaDAO extends OracleBaseDAO<AtividadeFisica> imp
 					+ "DS_ATIVIDADE = ?,"
 					+ "CD_TIPO_ATIVIDADE_FISICA = ?,"
 					+ "CD_USUARIO = ? "
-					+ "WHERE CD_ATIVIDADE_FISICA = ?;";
+					+ "WHERE CD_ATIVIDADE_FISICA = ?";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setInt(1, entidade.getCalorias());

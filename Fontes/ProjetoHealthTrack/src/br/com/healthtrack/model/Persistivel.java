@@ -42,7 +42,7 @@ public abstract class Persistivel<T> implements Serializable{
 	 * Atribui o códigodo do registro no banco de dados.
 	 * @param código do registro no banco de dados.
 	 */
-	protected void setCodigo(int codigo) {
+	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
 

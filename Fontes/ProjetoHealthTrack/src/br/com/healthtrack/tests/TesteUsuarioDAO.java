@@ -14,7 +14,7 @@ public class TesteUsuarioDAO {
 				"Andrey Frazatti Alves", 
 				LocalDate.now(), 
 				175, 
-				'M', 
+				"M", 
 				"meuemail@email.com.br", 
 				"Senha@123");
 	}

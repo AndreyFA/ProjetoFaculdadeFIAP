@@ -2,6 +2,7 @@ package br.com.healthtrack.tests;
 
 import br.com.healthtrack.dao.*;
 import br.com.healthtrack.model.Usuario;
+import br.com.healthtrack.utils.DateUtils;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -37,9 +38,9 @@ public class TesteConnectionManager {
 		if (resultSet.next()) {
 			usuarios.add(new Usuario(
 					resultSet.getString("NM_USUARIO"),
-					LocalDate.parse(resultSet.getDate("DT_NASCIMENTO").toString()),
+					DateUtils.asLocalDate(resultSet.getDate("DT_NASCIMENTO")),
 					resultSet.getFloat("VL_ALTURA"),
-					resultSet.getString("DS_GENERO").toCharArray()[0],
+					resultSet.getString("DS_GENERO"),
 					resultSet.getString("DS_EMAIL"),
 					resultSet.getString("DS_SENHA")
 					));

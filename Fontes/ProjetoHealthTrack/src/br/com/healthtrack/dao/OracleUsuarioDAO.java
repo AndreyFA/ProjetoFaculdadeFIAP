@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import br.com.healthtrack.dao.interfaces.UsuarioDAO;
 import br.com.healthtrack.model.Usuario;
+import br.com.healthtrack.utils.DateUtils;
 
 public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioDAO {
 	
@@ -19,7 +20,7 @@ public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioD
 		
 		String sql = ""
 				+ "SELECT * "
-				+ "FROM T_HLT_USUARIO;";
+				+ "FROM T_HLT_USUARIO";
 		
 		try {			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
@@ -27,10 +28,11 @@ public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioD
 			
 			while(resultSet.next()) {
 				Usuario usuario = new Usuario();
+				usuario.setCodigo(resultSet.getInt("CD_USUARIO"));
 				usuario.setNomeCompleto(resultSet.getString("NM_USUARIO"));
-				usuario.setDataNascimento(LocalDate.parse(resultSet.getString("DT_NASCIMENTO")));
+				usuario.setDataNascimento(DateUtils.asLocalDate(resultSet.getDate("DT_NASCIMENTO")));
 				usuario.setAltura(resultSet.getInt("VL_ALTURA"));
-				usuario.setGenero(resultSet.getString("DS_GENERO").toCharArray()[0]);
+				usuario.setGenero(resultSet.getString("DS_GENERO"));
 				usuario.setEmail(resultSet.getString("DS_EMAL"));
 				usuario.setSenha(resultSet.getString("DS_SENHA"));
 				
@@ -61,10 +63,11 @@ public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioD
 			
 			while(resultSet.next()) {
 				usuario = new Usuario();
+				usuario.setCodigo(resultSet.getInt("CD_USUARIO"));
 				usuario.setNomeCompleto(resultSet.getString("NM_USUARIO"));
-				usuario.setDataNascimento(LocalDate.parse(resultSet.getString("DT_NASCIMENTO")));
+				usuario.setDataNascimento(DateUtils.asLocalDate(resultSet.getDate("DT_NASCIMENTO")));
 				usuario.setAltura(resultSet.getInt("VL_ALTURA"));
-				usuario.setGenero(resultSet.getString("DS_GENERO").toCharArray()[0]);
+				usuario.setGenero(resultSet.getString("DS_GENERO"));
 				usuario.setEmail(resultSet.getString("DS_EMAL"));
 				usuario.setSenha(resultSet.getString("DS_SENHA"));
 				break;				
@@ -96,13 +99,13 @@ public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioD
 					+ "?,"
 					+ "?,"
 					+ "?,"
-					+ "?);";
+					+ "?)";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setString(1, entidade.getNomeCompleto());
-			statement.setString(2, entidade.getDataNascimento().toString());
+			statement.setDate(2, DateUtils.asSqlDate(entidade.getDataNascimento()));
 			statement.setFloat(3, entidade.getAltura());
-			statement.setString(4,  Character.toString(entidade.getGenero()));
+			statement.setString(4, entidade.getGenero());
 			statement.setString(5, entidade.getEmail());
 			statement.setString(6, entidade.getSenha());
 			
@@ -124,13 +127,13 @@ public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioD
 					+ "DS_GENERO = ?,"
 					+ "DS_EMAIL = ?,"
 					+ "DS_SENHA = ? "
-					+ "WHERE CD_USUARIO = ?;";
+					+ "WHERE CD_USUARIO = ?";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setString(1, entidade.getNomeCompleto());
-			statement.setString(2, entidade.getDataNascimento().toString());
+			statement.setDate(2, DateUtils.asSqlDate(entidade.getDataNascimento()));
 			statement.setFloat(3, entidade.getAltura());
-			statement.setString(4,  Character.toString(entidade.getGenero()));
+			statement.setString(4, entidade.getGenero());
 			statement.setString(5, entidade.getEmail());
 			statement.setString(6, entidade.getSenha());
 			statement.setInt(7, entidade.getCodigo());
@@ -147,7 +150,7 @@ public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioD
 		try {
 			String sql = ""
 					+ "DELETE FROM T_HLT_USUARIO "
-					+ "WHERE CD_USUARIO = ?;";
+					+ "WHERE CD_USUARIO = ?";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setInt(1, id);
