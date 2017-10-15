@@ -144,11 +144,11 @@ public class Usuario extends Persistivel<Usuario> implements Serializable {
 	 */
 	public void setGenero(String genero) throws InvalidParameterException {
 		
-		if(genero.toUpperCase() != "M" && genero.toUpperCase() != "F") {
+		if(genero.toUpperCase() == "M" || genero.toUpperCase() == "F") {
+			this.genero = genero;			
+		} else {
 			throw new InvalidParameterException("Informe um gênero válido.");
-		}
-		
-		this.genero = genero;
+		}	
 	}
 	
 	/***
