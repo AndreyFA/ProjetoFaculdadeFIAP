@@ -1,5 +1,6 @@
 package br.com.healthtrack.utils;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,6 +23,14 @@ public class DateUtils {
 	
 	public static java.sql.Date asSqlDate(LocalDate localDate) {
 		return java.sql.Date.valueOf(localDate);
+	}
+	
+	public static java.sql.Timestamp asSqlTimestamp(LocalDateTime localDateTime) {
+		return Timestamp.valueOf(localDateTime);
+	}
+	
+	public static LocalDateTime asLocalDateTime(java.sql.Timestamp timestamp) {
+		return timestamp.toLocalDateTime();
 	}
 	
 	public static LocalDate asLocalDate(Date date) {

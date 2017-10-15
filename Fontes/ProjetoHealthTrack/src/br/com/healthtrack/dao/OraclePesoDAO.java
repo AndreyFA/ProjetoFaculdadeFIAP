@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import br.com.healthtrack.dao.interfaces.PesoDAO;
 import br.com.healthtrack.model.Peso;
+import br.com.healthtrack.utils.DateUtils;
 
 public class OraclePesoDAO extends OracleBaseDAO<Peso> implements PesoDAO {
 
@@ -30,7 +31,7 @@ public class OraclePesoDAO extends OracleBaseDAO<Peso> implements PesoDAO {
 				Peso peso = new Peso();
 				peso.setCodigo(resultSet.getInt("CD_PESO"));
 				peso.setPeso(resultSet.getFloat("VL_PESO"));
-				peso.setData(LocalDate.parse(resultSet.getString("DT_PESO")));
+				peso.setData(DateUtils.asLocalDate(resultSet.getDate("DT_PESO")));
 				peso.setUsuario(DAOFactory.getUsuarioDAO().obterPorId(resultSet.getInt("CD_USUARIO")));
 				
 				pesos.add(peso);
@@ -61,7 +62,7 @@ public class OraclePesoDAO extends OracleBaseDAO<Peso> implements PesoDAO {
 				peso = new Peso();
 				peso.setCodigo(resultSet.getInt("CD_PESO"));
 				peso.setPeso(resultSet.getFloat("VL_PESO"));
-				peso.setData(LocalDate.parse(resultSet.getString("DT_PESO")));
+				peso.setData(DateUtils.asLocalDate(resultSet.getDate("DT_PESO")));
 				peso.setUsuario(DAOFactory.getUsuarioDAO().obterPorId(resultSet.getInt("CD_USUARIO")));
 				
 				break;
@@ -80,7 +81,7 @@ public class OraclePesoDAO extends OracleBaseDAO<Peso> implements PesoDAO {
 					+ "INSERT INTO T_HLT_PESO ("
 					+ "CD_PESO,"
 					+ "VL_PESO,"
-					+ "DT_PESO"
+					+ "DT_PESO,"
 					+ "CD_USUARIO) "
 					+ "VALUES ("
 					+ "SQ_PESO.NEXTVAL,"
@@ -89,8 +90,8 @@ public class OraclePesoDAO extends OracleBaseDAO<Peso> implements PesoDAO {
 					+ "?)";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
-			statement.setInt(1, entidade.getCodigo());
-			statement.setString(2, entidade.getData().toString());
+			statement.setFloat(1, entidade.getPeso());
+			statement.setDate(2, DateUtils.asSqlDate(entidade.getData()));
 			statement.setInt(3, entidade.getUsuario().getCodigo());
 			
 			super.persistir(statement);
@@ -112,7 +113,7 @@ public class OraclePesoDAO extends OracleBaseDAO<Peso> implements PesoDAO {
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setFloat(1, entidade.getPeso());
-			statement.setString(2, entidade.getData().toString());
+			statement.setDate(2,  DateUtils.asSqlDate(entidade.getData()));
 			statement.setInt(3, entidade.getUsuario().getCodigo());
 			statement.setInt(4, entidade.getCodigo());
 			

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import br.com.healthtrack.dao.interfaces.AtividadeFisicaDAO;
 import br.com.healthtrack.model.AtividadeFisica;
+import br.com.healthtrack.utils.DateUtils;
 
 public class OracleAtividadeFisicaDAO extends OracleBaseDAO<AtividadeFisica> implements AtividadeFisicaDAO {
 
@@ -31,8 +32,8 @@ public class OracleAtividadeFisicaDAO extends OracleBaseDAO<AtividadeFisica> imp
 				AtividadeFisica atividadeFisica = new AtividadeFisica();
 				atividadeFisica.setCodigo(resultSet.getInt("CD_ATIVIDADE_FISICA"));
 				atividadeFisica.setCalorias(resultSet.getInt("NR_CALORIAS"));
-				atividadeFisica.setData(LocalDate.parse(resultSet.getString("DT_ATIVIDADE")));
-				atividadeFisica.setHorario(LocalTime.parse(resultSet.getString("HR_ATIVIDADE")));
+				atividadeFisica.setData(DateUtils.asLocalDate(resultSet.getDate("DT_ATIVIDADE")));
+				atividadeFisica.setHorario(DateUtils.asLocalDateTime(resultSet.getTimestamp("HR_ATIVIDADE")));
 				atividadeFisica.setDescricao(resultSet.getString("DS_ATIVIDADE"));
 				atividadeFisica.setTipo(DAOFactory.getTipoAtividadeFisicaDAO().obterPorId(resultSet.getInt("CD_TIPO_ATIVIDADE_FISICA")));
 				atividadeFisica.setUsuario(DAOFactory.getUsuarioDAO().obterPorId(resultSet.getInt("CD_USUARIO")));
@@ -66,8 +67,8 @@ public class OracleAtividadeFisicaDAO extends OracleBaseDAO<AtividadeFisica> imp
 				atividadeFisica = new AtividadeFisica();
 				atividadeFisica.setCodigo(resultSet.getInt("CD_ATIVIDADE_FISICA"));
 				atividadeFisica.setCalorias(resultSet.getInt("NR_CALORIAS"));
-				atividadeFisica.setData(LocalDate.parse(resultSet.getString("DT_ATIVIDADE")));
-				atividadeFisica.setHorario(LocalTime.parse(resultSet.getString("HR_ATIVIDADE")));
+				atividadeFisica.setData(DateUtils.asLocalDate(resultSet.getDate("DT_ATIVIDADE")));
+				atividadeFisica.setHorario(DateUtils.asLocalDateTime(resultSet.getTimestamp("HR_ATIVIDADE")));
 				atividadeFisica.setDescricao(resultSet.getString("DS_ATIVIDADE"));
 				atividadeFisica.setTipo(DAOFactory.getTipoAtividadeFisicaDAO().obterPorId(resultSet.getInt("CD_TIPO_ATIVIDADE_FISICA")));
 				atividadeFisica.setUsuario(DAOFactory.getUsuarioDAO().obterPorId(resultSet.getInt("CD_USUARIO")));
@@ -98,15 +99,15 @@ public class OracleAtividadeFisicaDAO extends OracleBaseDAO<AtividadeFisica> imp
 					+ "SQ_ATIVIDADE_FISICA.NEXTVAL,"
 					+ "?,"
 					+ "TO_DATE(?),"
-					+ "TO_TIMESTAMP(?),"
-					+ "?"
-					+ "?"
+					+ "?,"
+					+ "?,"
+					+ "?,"
 					+ "?)";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setInt(1, entidade.getCalorias());
-			statement.setString(2, entidade.getData().toString());
-			statement.setString(3, entidade.getHorario().toString());
+			statement.setDate(2, DateUtils.asSqlDate(entidade.getData()));
+			statement.setTimestamp(3, DateUtils.asSqlTimestamp(entidade.getHorario()));
 			statement.setString(4, entidade.getDescricao());
 			statement.setInt(5, entidade.getTipo().getCodigo());
 			statement.setInt(6, entidade.getUsuario().getCodigo());

@@ -60,7 +60,7 @@ CREATE TABLE t_hlt_usuario (
     nm_usuario      VARCHAR2(80) NOT NULL,
     dt_nascimento   DATE NOT NULL,
     vl_altura       NUMBER(3) NOT NULL,
-    ds_genero       CHAR(1) NOT NULL,
+    ds_genero       VARCHAR2(10) NOT NULL,
     ds_email        VARCHAR2(80) NOT NULL,
     ds_senha        VARCHAR2(15) NOT NULL
 );
@@ -84,13 +84,7 @@ ALTER TABLE t_hlt_peso ADD CONSTRAINT peso_usuario_fk FOREIGN KEY ( cd_usuario )
 
 ALTER TABLE t_hlt_pressao_arterial ADD CONSTRAINT pressao_arterial_usuario_fk FOREIGN KEY ( cd_usuario )
     REFERENCES t_hlt_usuario ( cd_usuario );
-    
-CREATE SEQUENCE SQ_IMPLANTACAO
-INCREMENT BY 1
-START WITH 1
-MAXVALUE 99999999
-NOCACHE
-NOCYCLE;
+
 
 CREATE SEQUENCE SQ_ALIMENTO_CONSUMIDO
 INCREMENT BY 1

@@ -22,7 +22,7 @@ public class OracleAlimentoConsumidoDAO extends OracleBaseDAO<AlimentoConsumido>
 			
 			String sql = ""
 					+ "SELECT * "
-					+ "FROM T_HLT_ALIMENT_CONSUMIDO";
+					+ "FROM T_HLT_ALIMENTO_CONSUMIDO";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			ResultSet resultSet = super.executarBusca(statement);
@@ -34,7 +34,7 @@ public class OracleAlimentoConsumidoDAO extends OracleBaseDAO<AlimentoConsumido>
 				alimentoConsumido.setHorario(DateUtils.asLocalDateTime(resultSet.getDate("HR_REFEICAO")));
 				alimentoConsumido.setDescricao(resultSet.getString("DS_REFEICAO"));
 				alimentoConsumido.setTipo(new OracleTipoRefeicaoDAO().obterPorId(resultSet.getInt("CD_TIPO_REFEICAO")));
-				alimentoConsumido.setUsuario(new OracleUsuarioDAO().obterPorId(resultSet.getInt("CD_USUARO")));			
+				alimentoConsumido.setUsuario(new OracleUsuarioDAO().obterPorId(resultSet.getInt("CD_USUARIO")));			
 				
 				alimentosConsumidos.add(alimentoConsumido);
 			}		
@@ -54,7 +54,7 @@ public class OracleAlimentoConsumidoDAO extends OracleBaseDAO<AlimentoConsumido>
 		try {
 			String sql = ""
 					+ "SELECT * "
-					+ "FROM T_HLT_ALIMENT_CONSUMIDO "
+					+ "FROM T_HLT_ALIMENTO_CONSUMIDO "
 					+ "WHERE CD_ALIMENTO_CONSUMIDO = ? ";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
@@ -69,7 +69,7 @@ public class OracleAlimentoConsumidoDAO extends OracleBaseDAO<AlimentoConsumido>
 				alimentoConsumido.setHorario(DateUtils.asLocalDateTime(resultSet.getDate("HR_REFEICAO")));
 				alimentoConsumido.setDescricao(resultSet.getString("DS_REFEICAO"));
 				alimentoConsumido.setTipo(new OracleTipoRefeicaoDAO().obterPorId(resultSet.getInt("CD_TIPO_REFEICAO")));
-				alimentoConsumido.setUsuario(new OracleUsuarioDAO().obterPorId(resultSet.getInt("CD_USUARO")));
+				alimentoConsumido.setUsuario(new OracleUsuarioDAO().obterPorId(resultSet.getInt("CD_USUARIO")));
 				break;
 			}		
 			

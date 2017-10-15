@@ -3,6 +3,7 @@ package br.com.healthtrack.model;
 import java.io.Serializable;
 import java.security.InvalidParameterException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /***
@@ -27,7 +28,7 @@ public class AtividadeFisica extends Persistivel<AtividadeFisica> implements Ser
 	/***
 	 * Horário da atividade física.
 	 */
-	private LocalTime horario;
+	private LocalDateTime horario;
 	
 	/***
 	 * Descrição da atividade física.
@@ -60,7 +61,7 @@ public class AtividadeFisica extends Persistivel<AtividadeFisica> implements Ser
 	 * @param tipo Tipo da atividade física realizada.
 	 * @param usuario Referência do usuário.
 	 */
-	public AtividadeFisica(int calorias, LocalDate data, LocalTime horario, String descricao, TipoAtividadeFisica tipo, Usuario usuario) {
+	public AtividadeFisica(int calorias, LocalDate data, LocalDateTime horario, String descricao, TipoAtividadeFisica tipo, Usuario usuario) {
 		setCalorias(calorias);
 		setData(data);
 		setHorario(horario);
@@ -111,7 +112,7 @@ public class AtividadeFisica extends Persistivel<AtividadeFisica> implements Ser
 	 * Retorna o horário da atividade física.
 	 * @return Horário da atividade física.
 	 */
-	public LocalTime getHorario() {
+	public LocalDateTime getHorario() {
 		return horario;
 	}
 	
@@ -120,7 +121,7 @@ public class AtividadeFisica extends Persistivel<AtividadeFisica> implements Ser
 	 * @param horario Horário da atividade física.
 	 * @throws InvalidParameterException Não é permitido um horário nulo.
 	 */
-	public void setHorario(LocalTime horario) throws InvalidParameterException {
+	public void setHorario(LocalDateTime horario) throws InvalidParameterException {
 		
 		if(horario == null) {
 			throw new InvalidParameterException("Informe um horário válido.");

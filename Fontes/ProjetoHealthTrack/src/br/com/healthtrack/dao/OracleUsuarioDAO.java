@@ -33,7 +33,7 @@ public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioD
 				usuario.setDataNascimento(DateUtils.asLocalDate(resultSet.getDate("DT_NASCIMENTO")));
 				usuario.setAltura(resultSet.getInt("VL_ALTURA"));
 				usuario.setGenero(resultSet.getString("DS_GENERO"));
-				usuario.setEmail(resultSet.getString("DS_EMAL"));
+				usuario.setEmail(resultSet.getString("DS_EMAIL"));
 				usuario.setSenha(resultSet.getString("DS_SENHA"));
 				
 				usuarios.add(usuario);
@@ -68,7 +68,7 @@ public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioD
 				usuario.setDataNascimento(DateUtils.asLocalDate(resultSet.getDate("DT_NASCIMENTO")));
 				usuario.setAltura(resultSet.getInt("VL_ALTURA"));
 				usuario.setGenero(resultSet.getString("DS_GENERO"));
-				usuario.setEmail(resultSet.getString("DS_EMAL"));
+				usuario.setEmail(resultSet.getString("DS_EMAIL"));
 				usuario.setSenha(resultSet.getString("DS_SENHA"));
 				break;				
 			}

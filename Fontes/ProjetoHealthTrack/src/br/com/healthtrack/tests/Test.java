@@ -18,6 +18,8 @@ public class Test {
 	private static Usuario usuario = new Usuario();
 
 	public static void main(String[] args) {
+		usuario.setCodigo(1);	
+		
 		executarTestesDeUsuario();
 		executarTestesDeTipoDeRefeicao();
 		executarTestesDeAlimentoConsumido();
@@ -25,8 +27,6 @@ public class Test {
 		executarTestesDeAtividadeFisica();
 		executarTestesDePeso();
 		executarTestesDePressaoArterial();
-		
-		usuario.setCodigo(1);
 	}
 	
 	private static void executarTestesDeUsuario() {	
@@ -79,7 +79,7 @@ public class Test {
 		tipoAtividadeFisica.setCodigo(1);
 		
 		for(int i = 0; i < 5; i++) {
-			testeDao.deveSerPossivelCadastarUmaAtividadeFisica(new AtividadeFisica(65, LocalDate.now(), LocalTime.now(), "Atividade " + i, tipoAtividadeFisica, usuario));
+			testeDao.deveSerPossivelCadastarUmaAtividadeFisica(new AtividadeFisica(65, LocalDate.now(), LocalDateTime.now(), "Atividade " + i, tipoAtividadeFisica, usuario));
 		}
 		
 		ArrayList<AtividadeFisica> atividadesFisicas = testeDao.deveSerPossivelRecuperarTodasAtividadesFisicas();

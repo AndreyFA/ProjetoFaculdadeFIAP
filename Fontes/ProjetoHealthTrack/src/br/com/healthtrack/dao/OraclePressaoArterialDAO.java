@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import br.com.healthtrack.dao.interfaces.PressaoArterialDAO;
 import br.com.healthtrack.model.PressaoArterial;
+import br.com.healthtrack.utils.DateUtils;
 
 public class OraclePressaoArterialDAO extends OracleBaseDAO<PressaoArterial> implements PressaoArterialDAO {
 
@@ -31,7 +32,7 @@ public class OraclePressaoArterialDAO extends OracleBaseDAO<PressaoArterial> imp
 				pressaoArterial.setCodigo(resultSet.getInt("CD_PRESSAO_ARTERIAL"));
 				pressaoArterial.setPressaoSistolica(resultSet.getInt("VL_PRESSAO_SISTOLICA"));
 				pressaoArterial.setPressaoDiastolica(resultSet.getInt("VL_PRESSAO_DIASTOLICA"));
-				pressaoArterial.setData(LocalDate.parse(resultSet.getString("DT_MEDICAO")));
+				pressaoArterial.setData(DateUtils.asLocalDate(resultSet.getDate("DT_MEDICAO")));
 				pressaoArterial.setUsuario(DAOFactory.getUsuarioDAO().obterPorId(resultSet.getInt("CD_USUARIO")));
 				
 				pressoesArteriais.add(pressaoArterial);
@@ -64,7 +65,7 @@ public class OraclePressaoArterialDAO extends OracleBaseDAO<PressaoArterial> imp
 				pressaoArterial.setCodigo(resultSet.getInt("CD_PRESSAO_ARTERIAL"));
 				pressaoArterial.setPressaoSistolica(resultSet.getInt("VL_PRESSAO_SISTOLICA"));
 				pressaoArterial.setPressaoDiastolica(resultSet.getInt("VL_PRESSAO_DIASTOLICA"));
-				pressaoArterial.setData(LocalDate.parse(resultSet.getString("DT_MEDICAO")));
+				pressaoArterial.setData(DateUtils.asLocalDate(resultSet.getDate("DT_MEDICAO")));
 				pressaoArterial.setUsuario(DAOFactory.getUsuarioDAO().obterPorId(resultSet.getInt("CD_USUARIO")));
 				
 				break;
@@ -99,7 +100,7 @@ public class OraclePressaoArterialDAO extends OracleBaseDAO<PressaoArterial> imp
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setInt(1, entidade.getPressaoSistolica());
 			statement.setInt(2, entidade.getPressaoDiastolica());
-			statement.setString(3, entidade.getData().toString());
+			statement.setDate(3, DateUtils.asSqlDate(entidade.getData()));
 			statement.setString(4, entidade.getSituacao());
 			statement.setInt(5, entidade.getUsuario().getCodigo());
 			
@@ -125,7 +126,7 @@ public class OraclePressaoArterialDAO extends OracleBaseDAO<PressaoArterial> imp
 			PreparedStatement statement = super.connection.prepareStatement(sql);
 			statement.setInt(1, entidade.getPressaoSistolica());
 			statement.setInt(2, entidade.getPressaoDiastolica());
-			statement.setString(3, entidade.getData().toString());
+			statement.setDate(3, DateUtils.asSqlDate(entidade.getData()));
 			statement.setString(4, entidade.getSituacao());
 			statement.setInt(5, entidade.getUsuario().getCodigo());
 			statement.setInt(6, entidade.getCodigo());
