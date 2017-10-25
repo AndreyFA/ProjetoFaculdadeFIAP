@@ -1,0 +1,53 @@
+@import "bootstrap.css";
+@import "jquery-ui.min.css";
+
+.conteudo {
+    /*border: 1px solid grey;*/
+    border-radius: 2%;
+    background-color: #f5f5f1;
+}
+
+.icone-tabela {
+    position: relative;
+    left: 50%;
+}
+
+.icons {
+    height: 45px;
+    width: 45px;
+}
+
+.menu-icons-xs {
+    height: 25px;
+    width: 25px;
+}
+
+.icons-tabela {
+    height: 25px;
+    width: 25px;
+}
+
+.menu li a img {
+    position: relative;
+    left: 7%;
+}
+
+.fonte-titulo {
+    font-size: 2em;
+    font-weight: 500;
+    line-height: 1.1;
+    color: inherit;
+    font-style: none;
+}
+
+.login-panel {
+    margin-top: 5%;
+}
+
+.rememberPassword {
+    margin-top: 3%;
+}
+
+.login-background {
+    background-color: #d3d3d3;
+}
