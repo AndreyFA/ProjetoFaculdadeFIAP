@@ -3,38 +3,32 @@
 <%@ include file="loadPageHeader.jsp"%>
 <div class="container-fluid conteudo">
 	<ol class="breadcrumb">
-		<li><a href="dashboard.html">Dashboard</a></li>
-		<li class="active">Meus alimentos consumidos</li>
+		<li><a href="dashboard.jsp">Dashboard</a></li>
+		<li class="active">Meu peso</li>
 	</ol>
 	<div class="row">
 		<div class="col-md-12">
-			<img class="icons hidden-xs" src="resources/img/Food.png" alt=""><span
-				class="fonte-titulo">Comeu algo saudável?</span>
+			<img class="icons" src="resources/img/Balance.png" alt=""><span
+				class="fonte-titulo">Vamos encarar a balança!</span>
 		</div>
 	</div>
 	<br>
 	<div class="row">
-		<div class="col-xs-12 col-md-12">
+		<div class="col-md-12">
 			<div class="table-responsive">
 				<table class="table table-bordered">
 					<thead>
 						<tr>
-							<th class="text-center">Tipo</th>
-							<th class="text-center">Nº de calorias</th>
+							<th class="text-center">Peso (em quilos)</th>
 							<th class="text-center">Data</th>
-							<th class="text-center">Horário</th>
-							<th class="text-center">Descrição</th>
 							<th class="text-center">Editar</th>
 							<th class="text-center">Remover</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td class="text-center">Lanche leve</td>
-							<td class="text-center">53</td>
-							<td class="text-center">01/04/2017</td>
-							<td class="text-center">10:15</td>
-							<td class="text-center">Barrinha de Ceral</td>
+							<td class="text-center">71,50 kg</td>
+							<td class="text-center">24/12/2016</td>
 							<td><a class="icone-tabela" href="#" data-toggle="modal"
 								data-target="#modalEdicao"> <span
 									class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
@@ -45,11 +39,8 @@
 							</a></td>
 						</tr>
 						<tr>
-							<td class="text-center">Lanche leve</td>
-							<td class="text-center">53</td>
-							<td class="text-center">01/04/2017</td>
-							<td class="text-center">10:15</td>
-							<td class="text-center">Barrinha de Ceral</td>
+							<td class="text-center">70,81 kg</td>
+							<td class="text-center">23/02/2017</td>
 							<td><a class="icone-tabela" href="#" data-toggle="modal"
 								data-target="#modalEdicao"> <span
 									class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
@@ -60,11 +51,8 @@
 							</a></td>
 						</tr>
 						<tr>
-							<td class="text-center">Lanche leve</td>
-							<td class="text-center">53</td>
+							<td class="text-center">68,25 kg</td>
 							<td class="text-center">01/04/2017</td>
-							<td class="text-center">10:15</td>
-							<td class="text-center">Barrinha de Ceral</td>
 							<td><a class="icone-tabela" href="#" data-toggle="modal"
 								data-target="#modalEdicao"> <span
 									class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
@@ -84,7 +72,7 @@
 			<button type="button" class="btn btn-primary" data-toggle="modal"
 				data-target="#modalInclusao">
 				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-				Novo Alimento
+				Novo peso
 			</button>
 		</div>
 		<div class="col-md-3 col-md-offset-8">
@@ -112,43 +100,27 @@
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="myModalLabel">Humm! Parece bom</h4>
+				<h4 class="modal-title" id="myModalLabel">Perdeu o ganhou?</h4>
 			</div>
 			<div class="modal-body">
-				<form action="">
+				<form action="peso" method="post">
 					<div class="form-group">
-						<label for="tipoRefeicaoInclusao">Tipo de refeição</label> <select
-							class="form-control" id="tipoRefeicaoInclusao" required>
-							<option>Lanche leve</option>
-							<option>Lanche leve</option>
-							<option>Lanche leve</option>
-							<option>Lanche leve</option>
-							<option>Lanche leve</option>
-						</select>
+						<label for="pesoInclusao">Informe seu peso</label> <input
+							type="text" class="form-control tipoNumerico" id="pesoInclusao"
+							name="pesoInclusao" required>
 					</div>
 					<div class="form-group">
-						<label for="totalCaloriasInclusao">Quantas calorias?</label> <input
-							type="text" class="form-control tipoNumerico"
-							id="totalCaloriasInclusao" required>
-					</div>
-					<div class="form-group">
-						<label for="dataInclusao">Data</label> <input type="text"
-							class="form-control tipoCalendario" id="dataInclusao" required>
-					</div>
-					<div class="form-group">
-						<label for="horarioInclusao">Horário</label> <input type="text"
-							class="form-control tipoHorario" id="horarioInclusao" required>
-					</div>
-					<div class="form-group">
-						<label for="descricaoInclusao">Descrição</label> <input
-							type="text" class="form-control" id="descricaoInclusao">
+						<label for="dataPesoInclusao">Quando foi isso?</label> <input
+							type="text" class="form-control tipoCalendario"
+							id="dataPesoInclusao" name="dataPesoInclusao" required>
+					</div>					
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+						<input type="submit" class="btn btn-primary btnFinaliza" value="Salvar">
 					</div>
 				</form>
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-				<button type="button" class="btn btn-primary btnFinaliza">Salvar</button>
-			</div>
+
 		</div>
 	</div>
 </div>
@@ -162,40 +134,17 @@
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="myModalLabel">Alterar alimento
-					consumido</h4>
+				<h4 class="modal-title" id="myModalLabel">Alterar Peso</h4>
 			</div>
 			<div class="modal-body">
 				<form action="">
 					<div class="form-group">
-						<label for="tipoRefeicaoInclusao">Tipo de refeição</label> <select
-							class="form-control" id="tipoRefeicaoEdicao" required>
-							<option selected>Lanche leve</option>
-							<option>Lanche leve</option>
-							<option>Lanche leve</option>
-							<option>Lanche leve</option>
-							<option>Lanche leve</option>
-						</select>
+						<label for="pesoEdicao">Peso</label> <input type="text"
+							class="form-control tipoNumerico" id="pesoEdicao" required>
 					</div>
 					<div class="form-group">
-						<label for="totalCaloriasInclusao">Quantas calorias?</label> <input
-							type="text" class="form-control tipoNumerico"
-							id="totalCaloriasEdicao" value="53" required>
-					</div>
-					<div class="form-group">
-						<label for="dataInclusao">Data</label> <input type="text"
-							class="form-control tipoCalendario" id="dataEdicao"
-							value="01-04-2017" required>
-					</div>
-					<div class="form-group">
-						<label for="horarioInclusao">Horário</label> <input type="text"
-							class="form-control tipoHorario" id="horarioEdicao" value="10:15"
-							required>
-					</div>
-					<div class="form-group">
-						<label for="descricaoInclusao">Descrição</label> <input
-							type="text" class="form-control" id="descricaoEdicao"
-							value="Barrinha de Cereal">
+						<label for="dataPesoEdicao">Data</label> <input type="text"
+							class="form-control tipoCalendario" id="dataPesoEdicao" required>
 					</div>
 				</form>
 			</div>
@@ -222,34 +171,14 @@
 			<div class="modal-body">
 				<form action="">
 					<div class="form-group">
-						<label for="tipoRefeicaoInclusao">Tipo de refeição</label> <select
-							class="form-control" id="tipoRefeicaoRemocao" disabled>
-							<option selected>Lanche leve</option>
-							<option>Lanche leve</option>
-							<option>Lanche leve</option>
-							<option>Lanche leve</option>
-							<option>Lanche leve</option>
-						</select>
+						<label for="pesoRemocao">Peso</label> <input type="text"
+							class="form-control tipoNumerico" id="pesoRemocao" value="68.5"
+							disabled>
 					</div>
 					<div class="form-group">
-						<label for="totalCaloriasInclusao">Quantas calorias?</label> <input
-							type="text" class="form-control tipoNumerico"
-							id="totalCaloriasRemocao" value="53" disabled>
-					</div>
-					<div class="form-group">
-						<label for="dataInclusao">Data</label> <input type="text"
-							class="form-control tipoCalendario" id="dataRemocao"
+						<label for="dataPesoRemocao">Data</label> <input type="text"
+							class="form-control tipoCalendario" id="dataPesoRemocao"
 							value="01-04-2017" disabled>
-					</div>
-					<div class="form-group">
-						<label for="horarioInclusao">Horário</label> <input type="text"
-							class="form-control tipoHorario" id="horarioRemocao"
-							value="10:15" disabled>
-					</div>
-					<div class="form-group">
-						<label for="descricaoInclusao">Descrição</label> <input
-							type="text" class="form-control" id="descricaoRemocao"
-							value="Barrinha de Cereal" disabled>
 					</div>
 				</form>
 			</div>

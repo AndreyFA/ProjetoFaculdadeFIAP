@@ -3,7 +3,7 @@
 <%@ include file="loadPageHeader.jsp"%>
 <div class="container-fluid conteudo">
 	<ol class="breadcrumb">
-		<li><a href="dashboard.html">Dashboard</a></li>
+		<li><a href="dashboard.jsp">Dashboard</a></li>
 		<li class="active">Meus dados cadastrais</li>
 	</ol>
 	<div class="row">

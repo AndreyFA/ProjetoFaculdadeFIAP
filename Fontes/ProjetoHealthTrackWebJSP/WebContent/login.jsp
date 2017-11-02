@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Health Track</title>
-<link rel="stylesheet" href="resources/css/healthTrackTheme.css">
+<%@ include file="loadScriptsCSS.jsp" %>
 </head>
 <body>
 	<div class="container-fluid">
@@ -69,10 +69,6 @@
 			</div>
 		</div>
 	</div>
-	<script src="resources/js/jquery-3.2.1.js"></script>
-	<script src="resources/js/bootstrap.js"></script>
-	<script src="resources/js/jquery-ui.min.js"></script>
-	<script src="resources/js/jquery.mask.min.js"></script>
-	<script src="resources/js/healthTrackScript.js"></script>
+	<%@ include file="loadScriptsJS.jsp" %>
 </body>
 </html>
