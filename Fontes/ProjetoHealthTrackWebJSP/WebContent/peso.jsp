@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="loadPageHeader.jsp"%>
 <div class="container-fluid conteudo">
 	<ol class="breadcrumb">
@@ -26,42 +28,21 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td class="text-center">71,50 kg</td>
-							<td class="text-center">24/12/2016</td>
-							<td><a class="icone-tabela" href="#" data-toggle="modal"
-								data-target="#modalEdicao"> <span
-									class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-							</a></td>
-							<td><a class="icone-tabela" href="#" data-toggle="modal"
-								data-target="#modalRemocao"> <span
-									class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-							</a></td>
-						</tr>
-						<tr>
-							<td class="text-center">70,81 kg</td>
-							<td class="text-center">23/02/2017</td>
-							<td><a class="icone-tabela" href="#" data-toggle="modal"
-								data-target="#modalEdicao"> <span
-									class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-							</a></td>
-							<td><a class="icone-tabela" href="#" data-toggle="modal"
-								data-target="#modalRemocao"> <span
-									class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-							</a></td>
-						</tr>
-						<tr>
-							<td class="text-center">68,25 kg</td>
-							<td class="text-center">01/04/2017</td>
-							<td><a class="icone-tabela" href="#" data-toggle="modal"
-								data-target="#modalEdicao"> <span
-									class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-							</a></td>
-							<td><a class="icone-tabela" href="#" data-toggle="modal"
-								data-target="#modalRemocao"> <span
-									class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-							</a></td>
-						</tr>
+						<c:forEach items="${pesos }" var="p">
+							<tr>
+								<td class="text-center">"${p.getPeso()}"</td>
+								<td class="text-center">"${p.getData()}"</td>
+								<td><a class="icone-tabela" href="#" data-toggle="modal"
+									data-target="#modalEdicao"> <span
+										class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+								</a></td>
+								<td><a class="icone-tabela" href="#" data-toggle="modal"
+									data-target="#modalRemocao"> <span
+										class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+								</a></td>
+							</tr>
+
+						</c:forEach>
 					</tbody>
 				</table>
 			</div>
@@ -103,7 +84,7 @@
 				<h4 class="modal-title" id="myModalLabel">Perdeu o ganhou?</h4>
 			</div>
 			<div class="modal-body">
-				<form action="peso" method="post">
+				<form action="peso" method="get">
 					<div class="form-group">
 						<label for="pesoInclusao">Informe seu peso</label> <input
 							type="text" class="form-control tipoNumerico" id="pesoInclusao"
@@ -112,11 +93,12 @@
 					<div class="form-group">
 						<label for="dataPesoInclusao">Quando foi isso?</label> <input
 							type="text" class="form-control tipoCalendario"
-							id="dataPesoInclusao" name="dataPesoInclusao" required>
-					</div>					
+							id="dataPesoInclusao" name="dataInclusao" required>
+					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-						<input type="submit" class="btn btn-primary btnFinaliza" value="Salvar">
+						<input type="submit" class="btn btn-primary btnFinaliza"
+							value="Salvar">
 					</div>
 				</form>
 			</div>
