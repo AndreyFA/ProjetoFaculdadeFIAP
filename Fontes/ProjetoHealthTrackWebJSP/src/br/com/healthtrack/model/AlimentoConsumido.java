@@ -13,6 +13,8 @@ public class AlimentoConsumido extends Persistivel<AlimentoConsumido> implements
 
 	private static final long serialVersionUID = 7939814281711748587L;
 	
+	private int codigo;
+
 	/***
 	 * Número de calorias contidas no alimento.
 	 */
@@ -59,6 +61,14 @@ public class AlimentoConsumido extends Persistivel<AlimentoConsumido> implements
 		setDescricao(descricao);
 		setTipo(tipo);
 		setUsuario(usuario);
+	}
+	
+	public int getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
 	}
 
 	/***

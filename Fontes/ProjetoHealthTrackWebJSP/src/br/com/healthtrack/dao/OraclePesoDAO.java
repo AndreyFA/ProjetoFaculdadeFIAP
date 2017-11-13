@@ -2,7 +2,6 @@ package br.com.healthtrack.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import br.com.healthtrack.dao.interfaces.PesoDAO;
@@ -107,7 +106,7 @@ public class OraclePesoDAO extends OracleBaseDAO<Peso> implements PesoDAO {
 			String sql = ""
 					+ "UPDATE T_HLT_PESO SET "
 					+ "VL_PESO = ?,"
-					+ "DT_PESO = TO_DATE(2),"
+					+ "DT_PESO = TO_DATE(?),"
 					+ "CD_USUARIO = ? "
 					+ "WHERE CD_PESO = ?";
 			

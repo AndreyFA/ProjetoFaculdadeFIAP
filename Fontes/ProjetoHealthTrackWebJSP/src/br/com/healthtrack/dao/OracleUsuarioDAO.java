@@ -1,7 +1,8 @@
 package br.com.healthtrack.dao;
 
-import java.sql.*;
-import java.time.LocalDate;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import br.com.healthtrack.dao.interfaces.UsuarioDAO;
@@ -160,6 +161,42 @@ public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioD
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
+	}
+
+	@Override
+	public Usuario autenticar(String email, String senha) {
+		Usuario usuario = null;
+		
+		String sql = ""
+				+ "SELECT * "
+				+ "FROM T_HLT_USUARIO "
+				+ "WHERE DS_EMAIL = ? "
+				+ "  AND DS_SENHA = ? ";
+		
+		try {			
+			PreparedStatement statement = super.connection.prepareStatement(sql);
+			statement.setString(1, email);
+			statement.setString(2, senha);
+			
+			ResultSet resultSet = super.executarBusca(statement);
+			
+			while(resultSet.next()) {
+				usuario = new Usuario();
+				usuario.setCodigo(resultSet.getInt("CD_USUARIO"));
+				usuario.setNomeCompleto(resultSet.getString("NM_USUARIO"));
+				usuario.setDataNascimento(DateUtils.asLocalDate(resultSet.getDate("DT_NASCIMENTO")));
+				usuario.setAltura(resultSet.getInt("VL_ALTURA"));
+				usuario.setGenero(resultSet.getString("DS_GENERO"));
+				usuario.setEmail(resultSet.getString("DS_EMAIL"));
+				usuario.setSenha(resultSet.getString("DS_SENHA"));
+				break;				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return usuario;
 	}
 
 }

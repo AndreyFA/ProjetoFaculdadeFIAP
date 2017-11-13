@@ -2,7 +2,6 @@ package br.com.healthtrack.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import br.com.healthtrack.dao.interfaces.PressaoArterialDAO;

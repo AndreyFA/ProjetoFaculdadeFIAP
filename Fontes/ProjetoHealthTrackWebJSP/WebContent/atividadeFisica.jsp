@@ -9,7 +9,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<img class="icons" src="resources/img/Exercise.png" alt=""><span
-				class="fonte-titulo"> Caramba! Você está se tornando um
+				class="fonte-titulo">Caramba! Você está se tornando um
 				atleta</span>
 		</div>
 	</div>
@@ -100,109 +100,6 @@
 					<li><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
 				</ul>
 			</nav>
-		</div>
-	</div>
-</div>
-<!-- Modal de Inclusão -->
-<div class="container-fluid modal fade" id="modalInclusao" tabindex="-1"
-	role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<h4 class="modal-title" id="myModalLabel">Só registrar e ir
-					descansar</h4>
-			</div>
-			<div class="modal-body">
-				<form action="">
-					<div class="form-group">
-						<label for="tipoAtividadeInclusao">Tipo de atividade</label> <select
-							class="form-control" id="tipoAtividadeInclusao" required>
-							<option>Corrida</option>
-							<option>Corrida</option>
-							<option>Corrida</option>
-							<option>Corrida</option>
-							<option>Corrida</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="totalCaloriasInclusao">Quantas calorias?</label> <input
-							class="form-control tipoNumerico" id="totalCaloriasInclusao"
-							required>
-					</div>
-					<div class="form-group">
-						<label for="dataInclusao">Data</label> <input type="text"
-							class="form-control tipoCalendario" id="dataInclusao" required>
-					</div>
-					<div class="form-group">
-						<label for="horarioInclusao">Horário</label> <input type="text"
-							class="form-control tipoHorario" id="horarioInclusao" required>
-					</div>
-					<div class="form-group">
-						<label for="descricaoInclusao">Descrição</label> <input
-							type="text" class="form-control" id="descricaoInclusao">
-					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-				<button type="button" class="btn btn-primary btnFinaliza">Salvar</button>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- Modal de Edição -->
-<div class="container-fluid modal fade" id="modalEdicao" tabindex="-1"
-	role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<h4 class="modal-title" id="myModalLabel">Alterar atividade
-					física</h4>
-			</div>
-			<div class="modal-body">
-				<form action="">
-					<div class="form-group">
-						<label for="tipoAtividadeInclusao">Tipo de atividade</label> <select
-							class="form-control" id="tipoAtividadeEdicao" required>
-							<option>Corrida</option>
-							<option>Corrida</option>
-							<option>Corrida</option>
-							<option>Corrida</option>
-							<option>Corrida</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="totalCaloriasInclusao">Quantas calorias?</label> <input
-							type="text" class="form-control tipoNumerico"
-							id="totalCaloriasEdicao" required>
-					</div>
-					<div class="form-group">
-						<label for="dataInclusao">Data</label> <input type="text"
-							class="form-control tipoCalendario" id="dataEdicao"
-							value="01-04-2017" required>
-					</div>
-					<div class="form-group">
-						<label for="horarioInclusao">Horário</label> <input type="text"
-							class="form-control tipoHorario" id="horarioEdicao" required>
-					</div>
-					<div class="form-group">
-						<label for="descricaoInclusao">Descrição</label> <input
-							type="text" class="form-control" id="descricaoEdicao">
-					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-				<button type="button" class="btn btn-primary btnFinaliza">Confirmar</button>
-			</div>
 		</div>
 	</div>
 </div>

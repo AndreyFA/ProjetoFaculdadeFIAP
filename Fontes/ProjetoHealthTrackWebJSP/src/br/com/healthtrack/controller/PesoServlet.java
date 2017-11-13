@@ -2,7 +2,7 @@ package br.com.healthtrack.controller;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,38 +10,78 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import br.com.healthtrack.model.*;
+import br.com.healthtrack.dao.DAOFactory;
+import br.com.healthtrack.dao.interfaces.PesoDAO;
+import br.com.healthtrack.dao.interfaces.UsuarioDAO;
+import br.com.healthtrack.model.Peso;
+import br.com.healthtrack.model.Usuario;
 
 @WebServlet("/peso")
-public class PesoServlet extends HttpServlet {
+public class PesoServlet extends BaseController {
 
-	private static final long serialVersionUID = -1035580250271846967L;
-
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String peso = req.getParameter("pesoInclusao");
-		String data = req.getParameter("dataInclusao");
-
-		super.doPost(req, resp);
-	}
+	private static final long serialVersionUID = 1L;
+	
+	private PesoDAO pesoDao;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		List<Peso> pesos = new ArrayList<>();
-		Usuario usuario = new Usuario(
-				"Andrey Frazatti Alves", 
-				LocalDate.now(), 
-				175F, 
-				"M", 
-				"email@email.com.br",
-				"Senha@123");
+	public void init() throws ServletException {
+		this.pesoDao = DAOFactory.getPesoDAO();
+	}	
+	
+	@Override
+	protected void abrirFormularioEdicao(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int codigo = Integer.parseInt(req.getParameter("codigo"));
+		Peso peso = this.pesoDao.obterPorId(codigo);
 		
-		for (int i = 0; i < 10; i++) {
-			pesos.add(new Peso(65.4F, LocalDate.now(), usuario));
-		}
+		req.setAttribute("peso", peso);
+		req.getRequestDispatcher("pesoFormEdicao.jsp").forward(req, resp);
+	}
+	
+	@Override
+	protected void abrirFormularioCadastro(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.getRequestDispatcher("pesoFormCadastro.jsp").forward(req, resp);
+	}
+	
+	@Override
+	protected void listar(HttpServletRequest req, HttpServletResponse resp, Usuario usuario) throws ServletException, IOException {
+		List<Peso> pesos = this.pesoDao.obterTodos();
 
 		req.setAttribute("pesos", pesos);
 		req.getRequestDispatcher("peso.jsp").forward(req, resp);
+	}
+
+	@Override
+	protected void cadastrar(HttpServletRequest req, HttpServletResponse resp, Usuario usuario) throws ServletException, IOException {
+		float peso = Float.parseFloat(req.getParameter("peso"));
+		LocalDate data = LocalDate.parse(req.getParameter("data"), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+
+		this.pesoDao.cadastrar(new Peso(peso, data, usuario));
+		
+		listar(req, resp, usuario);
+	}
+
+	@Override
+	protected void editar(HttpServletRequest req, HttpServletResponse resp, Usuario usuario) throws ServletException, IOException {
+		int codigo = Integer.parseInt(req.getParameter("codigo"));
+		float peso = Float.parseFloat(req.getParameter("peso"));
+		LocalDate data = LocalDate.parse(req.getParameter("data"), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+
+		Peso registroPeso = this.pesoDao.obterPorId(codigo);
+		registroPeso.setData(data);
+		registroPeso.setPeso(peso);
+
+		this.pesoDao.atualizar(registroPeso);
+		
+		listar(req, resp, usuario);
+	}
+
+	@Override
+	protected void excluir(HttpServletRequest req, HttpServletResponse resp, Usuario usuario) throws ServletException, IOException {
+		int codigo = Integer.parseInt(req.getParameter("codigo"));
+		this.pesoDao.deletar(codigo);
+		
+		listar(req, resp, usuario);
 	}
 }

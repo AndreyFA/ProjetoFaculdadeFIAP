@@ -23,7 +23,7 @@ ALTER TABLE t_hlt_atividade_fisica ADD CONSTRAINT t_hlt_atividade_fisica_pk PRIM
 
 CREATE TABLE t_hlt_peso (
     cd_peso      INTEGER NOT NULL,
-    vl_peso      NUMBER(2) NOT NULL,
+    vl_peso      NUMBER(4,2) NOT NULL,
     dt_peso      DATE NOT NULL,
     cd_usuario   INTEGER NOT NULL
 );
@@ -134,3 +134,6 @@ START WITH 1
 MAXVALUE 99999999
 NOCACHE
 NOCYCLE;
+
+
+select * from t_hlt_peso
