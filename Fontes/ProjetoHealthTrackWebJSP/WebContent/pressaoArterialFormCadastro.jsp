@@ -5,7 +5,7 @@
 <div class="container-fluid conteudo">
 	<ol class="breadcrumb">
 		<li><a href="dashboard">Dashboard</a></li>
-		<li><a href="pressaoArterial">Minha pressão</a></li>
+		<li><a href="pressaoArterial?opcao=listar">Minha pressão</a></li>
 		<li class="active">Cadastrar pressão</li>
 	</ol>
 	<div class="row">
@@ -19,15 +19,15 @@
 		<input type="hidden" value="cadastrar" name="opcao" />
 		<div class="form-group">
 			<label for="pressaoSistolicaInclusao">Pressão sistólica</label>
-			<input type="text" class="form-control tipoNumerico" id="pressaoSistolicaEdicao" value="123" required>
+			<input type="text" class="form-control tipoNumerico" id="pressaoSistolicaEdicao" name="pressaoSistolica" required>
 		</div>
 		<div class="form-group">
 			<label for="pressaoDiastolicaInclusao">Pressão diastólica</label>
-			<input type="text" class="form-control tipoNumerico" id="pressaoDiastolicaEdicao" value="84" required>
+			<input type="text" class="form-control tipoNumerico" id="pressaoDiastolicaEdicao" name="pressaoDiastolica" required>
 		</div>
 		<div class="form-group">
 			<label for="dataInclusao">Data</label> 
-			<input type="text" class="form-control tipoCalendario" id="dataEdicao" value="01-04-2017" required>
+			<input type="text" class="form-control tipoCalendario" id="dataEdicao" name="data" required>
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

@@ -5,7 +5,7 @@
 <div class="container-fluid conteudo">
 	<ol class="breadcrumb">
 		<li><a href="dashboard">Dashboard</a></li>
-		<li><a href="pressaoArterial">Minha pressão</a></li>
+		<li><a href="pressaoArterial?opcao=listar">Minha pressão</a></li>
 		<li class="active">Editar pressão</li>
 	</ol>
 	<div class="row">
@@ -15,18 +15,20 @@
 		</div>
 	</div>
 	<br>
-	<form action="">
+	<form action="pressaoArterial" method="post">
+		<input type="hidden" value="editar" name="opcao" />
+		<input type="hidden" value="${pressaoArterial.getCodigo() }" name="codigo" />
 		<div class="form-group">
 			<label for="pressaoSistolicaInclusao">Pressão sistólica</label> 
-			<input type="text" class="form-control tipoNumerico" id="pressaoSistolicaEdicao" value="123" required>
+			<input type="text" class="form-control tipoNumerico" id="pressaoSistolicaEdicao" name="pressaoSistolica" value="${pressaoArterial.getPressaoSistolica() }" required>
 		</div>
 		<div class="form-group">
 			<label for="pressaoDiastolicaInclusao">Pressão diastólica</label>
-			<input type="text" class="form-control tipoNumerico" id="pressaoDiastolicaEdicao" value="84" required>
+			<input type="text" class="form-control tipoNumerico" id="pressaoDiastolicaEdicao" name="pressaoDiastolica" value="${pressaoArterial.getPressaoDiastolica() }" required>
 		</div>
 		<div class="form-group">
 			<label for="dataInclusao">Data</label> 
-			<input type="text" class="form-control tipoCalendario" id="dataEdicao" value="01-04-2017" required>
+			<input type="text" class="form-control tipoCalendario" id="dataEdicao" name="data" value="${pressaoArterial.getData() }" required>
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

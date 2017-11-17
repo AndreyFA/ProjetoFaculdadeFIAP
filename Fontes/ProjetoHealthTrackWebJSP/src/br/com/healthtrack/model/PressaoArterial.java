@@ -129,7 +129,7 @@ public class PressaoArterial extends Persistivel<PressaoArterial> implements Ser
 	 * Normal: 120/80 até 140/90.
 	 * Abaixo do normal: pressão sistólica menor que 120.
 	 */
-	private void setSituacao() {
+	public void setSituacao() {
 				
 		if ((pressaoSistolica >= 120 || pressaoSistolica <= 140)
 				&& (pressaoDiastolica >= 80 || pressaoDiastolica <= 90)) {
