@@ -12,6 +12,8 @@ public class TipoRefeicao extends Persistivel<TipoRefeicao> implements Serializa
 	
 	private static final long serialVersionUID = -915843762150823503L;
 	
+	private int codigo;
+	
 	/***
 	 * Nome do tipo de refeição.
 	 */
@@ -52,6 +54,14 @@ public class TipoRefeicao extends Persistivel<TipoRefeicao> implements Serializa
 		}
 		
 		this.nome = nome;
+	}
+	
+	public int getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
 	}
 	
 	@Override

@@ -145,7 +145,7 @@ public class OracleAlimentoConsumidoDAO extends OracleBaseDAO<AlimentoConsumido>
 	public void deletar(int id) {
 		try {
 			String sql = ""
-					+ "DELETE FROM T_HLT_ALIMENTO_CONSUMIDO"
+					+ "DELETE FROM T_HLT_ALIMENTO_CONSUMIDO "
 					+ "WHERE CD_ALIMENTO_CONSUMIDO = ?";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);

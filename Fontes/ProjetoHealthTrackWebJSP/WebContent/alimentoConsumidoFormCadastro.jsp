@@ -5,7 +5,7 @@
 <div class="container-fluid conteudo">
 	<ol class="breadcrumb">
 		<li><a href="dashboard.jsp">Dashboard</a></li>
-		<li><a href="alimentoConsumido.jsp">Meus alimentos consumidos</a></li>
+		<li><a href="alimentoConsumido?opcao=listar">Meus alimentos consumidos</a></li>
 		<li class="active">Cadastrar alimento consumido</li>
 	</ol>
 	<div class="row">
@@ -15,32 +15,32 @@
 		</div>
 	</div>
 	<br>
-	<form action="">
+	<form action="alimentoConsumido" method="post">
+		<input type="hidden" name="opcao" value="cadastrar" />
 		<div class="form-group">
 			<label for="tipoRefeicaoInclusao">Tipo de refeição</label> 
-			<select class="form-control" id="tipoRefeicaoInclusao" required>
-				<option>Lanche leve</option>
-				<option>Lanche leve</option>
-				<option>Lanche leve</option>
-				<option>Lanche leve</option>
-				<option>Lanche leve</option>
+			<select class="form-control" name="tipoRefeicao" required>
+				<option value="0">Selecione</option>
+				<c:forEach items="${tipoRefeicoes }" var="t">
+					<option value="${t.getCodigo() }" >${t.getNome() }</option>
+				</c:forEach>
 			</select>
 		</div>
 		<div class="form-group">
 			<label for="totalCaloriasInclusao">Quantas calorias?</label> 
-			<input type="text" class="form-control tipoNumerico" id="totalCaloriasInclusao" required>
+			<input type="text" class="form-control tipoNumerico" name="calorias" id="totalCaloriasInclusao" required>
 		</div>
 		<div class="form-group">
 			<label for="dataInclusao">Data</label>
-			<input type="text" class="form-control tipoCalendario" id="dataInclusao" required>
+			<input type="text" class="form-control tipoCalendario" name="horario" id="dataInclusao" required>
 		</div>
 		<div class="form-group">
 			<label for="horarioInclusao">Horário</label> 
-			<input type="text" class="form-control tipoHorario" id="horarioInclusao" required>
+			<input type="text" class="form-control tipoHorario" name="horario" id="horarioInclusao" required>
 		</div>
 		<div class="form-group">
 			<label for="descricaoInclusao">Descrição</label>
-			<input type="text" class="form-control" id="descricaoInclusao">
+			<input type="text" class="form-control" name="descricao" id="descricaoInclusao">
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

@@ -20,7 +20,7 @@ public class OracleAtividadeFisicaDAO extends OracleBaseDAO<AtividadeFisica> imp
 		
 		try {
 			String sql = ""
-					+ "SELECT *"
+					+ "SELECT * "
 					+ "FROM T_HLT_ATIVIDADE_FISICA";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);
@@ -52,8 +52,8 @@ public class OracleAtividadeFisicaDAO extends OracleBaseDAO<AtividadeFisica> imp
 		
 		try {
 			String sql = ""
-					+ "SELECT *"
-					+ "FROM T_HLT_ATIVIDADE_FISICA"
+					+ "SELECT * "
+					+ "FROM T_HLT_ATIVIDADE_FISICA "
 					+ "WHERE CD_ATIVIDADE_FISICA = ?";
 			
 			PreparedStatement statement = super.connection.prepareStatement(sql);

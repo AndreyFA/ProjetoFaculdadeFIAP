@@ -7,14 +7,11 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import br.com.healthtrack.dao.DAOFactory;
 import br.com.healthtrack.dao.interfaces.PesoDAO;
-import br.com.healthtrack.dao.interfaces.UsuarioDAO;
 import br.com.healthtrack.model.Peso;
 import br.com.healthtrack.model.Usuario;
 
@@ -29,6 +26,46 @@ public class PesoServlet extends BaseController {
 	public void init() throws ServletException {
 		this.pesoDao = DAOFactory.getPesoDAO();
 	}	
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		Usuario usuario = this.obterUsuario(req);
+		
+		switch (req.getParameter("opcao")) {
+			case "editar": {
+				abrirFormularioEdicao(req, resp);
+				break;
+			}
+			case "cadastrar": {
+				abrirFormularioCadastro(req, resp);
+				break;
+			}
+			case "listar": {
+				listar(req, resp, usuario);
+				break;
+			}
+		}
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		Usuario usuario = this.obterUsuario(req);
+
+		switch (req.getParameter("opcao")) {
+			case "cadastrar": {
+				cadastrar(req, resp, usuario);
+				break;
+			}
+			case "editar": {
+				editar(req, resp, usuario);
+				break;
+			}
+			case "excluir": {
+				excluir(req, resp, usuario);
+				break;
+			}
+		}
+	}
 	
 	@Override
 	protected void abrirFormularioEdicao(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

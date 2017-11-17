@@ -15,32 +15,34 @@
 		</div>
 	</div>
 	<br>
-	<form action="">
+	<form action="atividadeFisica" method="post">
 		<div class="form-group">
 			<label for="tipoAtividadeInclusao">Tipo de atividade</label>
-			<select class="form-control" id="tipoAtividadeInclusao" required>
-				<option>Corrida</option>
-				<option>Corrida</option>
-				<option>Corrida</option>
-				<option>Corrida</option>
-				<option>Corrida</option>
+			<select class="form-control" id="tipoAtividadeInclusao" name="tipoAtividadeFisica" required>
+				<c:forEach items="${tipoAtividadesFisicas }" var="t">
+					<option value="${t.getCodigo() }">${t.getNome() }</option>
+				</c:forEach>
 			</select>
 		</div>
 		<div class="form-group">
 			<label for="totalCaloriasInclusao">Quantas calorias?</label>
-			<input class="form-control tipoNumerico" id="totalCaloriasInclusao" required>
+			<input class="form-control tipoNumerico" id="totalCaloriasInclusao" name="calorias" required>
 		</div>
 		<div class="form-group">
 			<label for="dataInclusao">Data</label>
-			<input type="text" class="form-control tipoCalendario" id="dataInclusao" required>
+			<input type="text" class="form-control tipoCalendario" id="dataInclusao" name="data" required>
 		</div>
 		<div class="form-group">
 			<label for="horarioInclusao">Horário</label>
-			<input type="text" class="form-control tipoHorario" id="horarioInclusao" required>
+			<input type="text" class="form-control tipoHorario" id="horarioInclusao" name="horario" required>
 		</div>
 		<div class="form-group">
 			<label for="descricaoInclusao">Descrição</label>
-			<input type="text" class="form-control" id="descricaoInclusao">
+			<input type="text" class="form-control" id="descricaoInclusao" name="descricao">
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+			<input type="submit" class="btn btn-primary btnFinaliza" value="Salvar" />
 		</div>
 	</form>
 </div>

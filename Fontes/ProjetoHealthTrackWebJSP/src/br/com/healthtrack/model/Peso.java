@@ -13,11 +13,6 @@ public class Peso extends Persistivel<Peso>  {
 	private static final long serialVersionUID = 213705830683833540L;
 	
 	/***
-	 * Código do usuário.
-	 */
-	private int codigo;
-
-	/***
 	 * Peso do usuário.
 	 */
 	private float peso;
@@ -115,14 +110,6 @@ public class Peso extends Persistivel<Peso>  {
 		}
 		
 		this.usuario = usuario;
-	}
-	
-	public int getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
 	}
 
 

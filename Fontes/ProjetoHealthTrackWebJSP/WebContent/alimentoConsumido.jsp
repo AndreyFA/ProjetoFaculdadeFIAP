@@ -32,14 +32,14 @@
 					<tbody>						
 						<c:forEach items="${alimentosConsumidos }" var="a">
 							<tr>
-								<td class="text-center">Lanche leve</td>
-								<td class="text-center">53</td>
-								<td class="text-center">01/04/2017</td>
-								<td class="text-center">10:15</td>
-								<td class="text-center">Barrinha de Ceral</td>
+								<td class="text-center">${a.getTipo().getNome() }</td>
+								<td class="text-center">${a.getCalorias() }</td>
+								<td class="text-center">${a.getHorario() }</td>
+								<td class="text-center">${a.getHorario() }</td>
+								<td class="text-center">${a.getDescricao() }</td>
 								<td align="center">
-									<c:url value="peso" var="link">
-										<c:param name="opcao" value="editar-alimento" />
+									<c:url value="alimentoConsumido" var="link">
+										<c:param name="opcao" value="editar" />
 										<c:param name="codigo" value="${a.getCodigo() }" />
 									</c:url>
 									<a class="btn btn-default" href="${link }">Editar</a>
@@ -56,11 +56,10 @@
 	</div>
 	<div class="row">
 		<div class="col-md-1">
-			<button type="button" class="btn btn-primary" data-toggle="modal"
-				data-target="#modalInclusao">
-				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-				Novo Alimento
-			</button>
+			<c:url value="alimentoConsumido" var="link">
+				<c:param name="opcao" value="cadastrar" />
+			</c:url>
+			<a class="btn btn-primary" href="${link }">Novo alimento</a>
 		</div>
 		<div class="col-md-3 col-md-offset-8">
 			<nav aria-label="...">
