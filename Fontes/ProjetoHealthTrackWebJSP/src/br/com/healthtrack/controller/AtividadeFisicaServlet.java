@@ -1,10 +1,12 @@
 package br.com.healthtrack.controller;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +23,7 @@ import br.com.healthtrack.model.Usuario;
 public class AtividadeFisicaServlet extends BaseController {
 
 	private static final long serialVersionUID = -3119950102476292024L;
+	
 	private AtividadeFisicaDAO atividadeFisicaDao;
 	private TipoAtividadeFisicaDAO tipoAtividadeFisicaDao;
 	
@@ -29,6 +32,7 @@ public class AtividadeFisicaServlet extends BaseController {
 		this.atividadeFisicaDao = DAOFactory.getAtividadeFisicaDAO();
 		this.tipoAtividadeFisicaDao = DAOFactory.getTipoAtividadeFisicaDAO();
 	}
+	
 	
 	private void carregarTipoDeAtividadesFisicas(HttpServletRequest req) {
 		List<TipoAtividadeFisica> tipoAtividadesFisicas = this.tipoAtividadeFisicaDao.obterTodos();		
@@ -58,44 +62,70 @@ public class AtividadeFisicaServlet extends BaseController {
 		List<AtividadeFisica> atividadesFisicas = this.atividadeFisicaDao.obterTodos();
 		
 		req.setAttribute("atividadesFisicas", atividadesFisicas);
-		req.getRequestDispatcher("atividadeFisica.jsp").forward(req, resp);
+		RequestDispatcher rd = req.getRequestDispatcher("atividadeFisica.jsp");		
+		rd.forward(req, resp);
 	}
 
 	@Override
 	protected void cadastrar(HttpServletRequest req, HttpServletResponse resp, Usuario usuario) throws ServletException, IOException {
-		int calorias = Integer.parseInt(req.getParameter("calorias"));		
-		LocalDate data = LocalDate.now();
-		LocalDateTime horario = LocalDateTime.now();
-		String descricao = req.getParameter("descricao");
 		
-		TipoAtividadeFisica tipo = new TipoAtividadeFisica();
-		tipo.setCodigo(Integer.parseInt("tipoAtividadeFisica"));
-		
-		this.atividadeFisicaDao.cadastrar(new AtividadeFisica(calorias, data, horario, descricao, tipo, usuario));		
-		
-		listar(req, resp, usuario);
+		try {
+			int calorias = Integer.parseInt(req.getParameter("calorias"));		
+			
+			SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+			Calendar data = Calendar.getInstance();
+			data.setTime(format.parse(req.getParameter("data")));		
+			
+			format = new SimpleDateFormat("hh:mm");			
+			Timestamp horario = new Timestamp(format.parse(req.getParameter("horario")).getTime());
+			
+			String descricao = req.getParameter("descricao");
+			
+			TipoAtividadeFisica tipo = new TipoAtividadeFisica();
+			tipo.setCodigo(Integer.parseInt(req.getParameter("tipoAtividadeFisica")));
+			
+			this.atividadeFisicaDao.cadastrar(new AtividadeFisica(calorias, data, horario, descricao, tipo, usuario));		
+			
+			listar(req, resp, usuario);
+		} catch(Exception e) {
+			e.printStackTrace();
+			req.setAttribute("erro", "Falha ao cadastrar.");
+		}		
 	}
 
 	@Override
 	protected void editar(HttpServletRequest req, HttpServletResponse resp, Usuario usuario) throws ServletException, IOException {
-		int codigo = Integer.parseInt(req.getParameter("codigo"));
-		int calorias = Integer.parseInt(req.getParameter("calorias"));		
-		LocalDate data = LocalDate.now();
-		LocalDateTime horario = LocalDateTime.now();
-		String descricao = req.getParameter("descricao");
 		
-		TipoAtividadeFisica tipo = new TipoAtividadeFisica();
-		tipo.setCodigo(Integer.parseInt(req.getParameter("tipoAtividadeFisica")));
+		try {
+			int codigo = Integer.parseInt(req.getParameter("codigo"));
+			int calorias = Integer.parseInt(req.getParameter("calorias"));	
+			
+			SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+			Calendar data = Calendar.getInstance();
+			data.setTime(format.parse(req.getParameter("data")));		
+			
+			format = new SimpleDateFormat("hh:mm");
+			
+			Timestamp horario = new Timestamp(format.parse(req.getParameter("horario")).getTime());
+			String descricao = req.getParameter("descricao");
+						
+			TipoAtividadeFisica tipo = new TipoAtividadeFisica();
+			tipo.setCodigo(Integer.parseInt(req.getParameter("tipoAtividadeFisica")));
+			
+			AtividadeFisica atividadeFisica = this.atividadeFisicaDao.obterPorId(codigo);
+			atividadeFisica.setCalorias(calorias);
+			atividadeFisica.setData(data);
+			atividadeFisica.setHorario(horario);
+			atividadeFisica.setDescricao(descricao);
+			
+			this.atividadeFisicaDao.atualizar(atividadeFisica);		
+			
+			listar(req, resp, usuario);
+		} catch(Exception e) {
+			e.printStackTrace();
+			req.setAttribute("erro", "Falha ao editar.");
+		}
 		
-		AtividadeFisica atividadeFisica = this.atividadeFisicaDao.obterPorId(codigo);
-		atividadeFisica.setCalorias(calorias);
-		atividadeFisica.setData(data);
-		atividadeFisica.setHorario(horario);
-		atividadeFisica.setDescricao(descricao);
-		
-		this.atividadeFisicaDao.atualizar(atividadeFisica);		
-		
-		listar(req, resp, usuario);
 	}
 
 	@Override

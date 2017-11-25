@@ -38,18 +38,17 @@
 		</div>
 		<div class="form-group">
 			<label for="dataInclusao">Data</label>
-			<input type="text" class="form-control tipoCalendario" id="dataInclusao" name="data" value="${alimentoConsumido.getHorario() }" required>
-		</div>
-		<div class="form-group">
-			<label for="horarioInclusao">Horário</label> 
-			<input type="text" class="form-control tipoHorario" id="horarioInclusao" name="horario" value="${alimentoConsumido.getHorario() }" required>
+			<input type="text" class="form-control tipoCalendario" id="dataInclusao" name="data" value='<fmt:formatDate value="${alimentoConsumido.getData().time }" pattern="dd-MM-yyyy"/>' required>
 		</div>
 		<div class="form-group">
 			<label for="descricaoInclusao">Descrição</label>
 			<input type="text" class="form-control" id="descricaoInclusao" name="descricao" value="${alimentoConsumido.getDescricao() }">
 		</div>
 		<div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+			<c:url value="alimentoConsumido" var="link">
+				<c:param name="opcao" value="listar" />
+			</c:url>
+			<a class="btn btn-default" href="${link }">Cancelar</a>
 			<input type="submit" class="btn btn-primary btnFinaliza" value="Salvar" />
 		</div>
 	</form>

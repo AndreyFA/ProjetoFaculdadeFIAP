@@ -2,6 +2,7 @@ package br.com.healthtrack.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import br.com.healthtrack.dao.interfaces.PesoDAO;
@@ -23,7 +24,7 @@ public class OraclePesoDAO extends OracleBaseDAO<Peso> implements PesoDAO {
 					+ "SELECT * "
 					+ "FROM T_HLT_PESO";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			ResultSet resultSet = super.executarBusca(statement);
 			
 			while (resultSet.next()) {
@@ -37,6 +38,12 @@ public class OraclePesoDAO extends OracleBaseDAO<Peso> implements PesoDAO {
 			}			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}			
 		}
 		
 		return pesos;
@@ -52,7 +59,7 @@ public class OraclePesoDAO extends OracleBaseDAO<Peso> implements PesoDAO {
 					+ "FROM T_HLT_PESO "
 					+ "WHERE CD_PESO = ?";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setInt(1, id);
 			
 			ResultSet resultSet = super.executarBusca(statement);
@@ -68,6 +75,12 @@ public class OraclePesoDAO extends OracleBaseDAO<Peso> implements PesoDAO {
 			}			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}			
 		}
 		
 		return peso;
@@ -88,7 +101,7 @@ public class OraclePesoDAO extends OracleBaseDAO<Peso> implements PesoDAO {
 					+ "TO_DATE(?),"
 					+ "?)";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setFloat(1, entidade.getPeso());
 			statement.setDate(2, DateUtils.asSqlDate(entidade.getData()));
 			statement.setInt(3, entidade.getUsuario().getCodigo());
@@ -97,6 +110,12 @@ public class OraclePesoDAO extends OracleBaseDAO<Peso> implements PesoDAO {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}			
 		}		
 	}
 
@@ -110,7 +129,7 @@ public class OraclePesoDAO extends OracleBaseDAO<Peso> implements PesoDAO {
 					+ "CD_USUARIO = ? "
 					+ "WHERE CD_PESO = ?";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setFloat(1, entidade.getPeso());
 			statement.setDate(2,  DateUtils.asSqlDate(entidade.getData()));
 			statement.setInt(3, entidade.getUsuario().getCodigo());
@@ -120,6 +139,12 @@ public class OraclePesoDAO extends OracleBaseDAO<Peso> implements PesoDAO {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}			
 		}
 		
 	}
@@ -131,13 +156,19 @@ public class OraclePesoDAO extends OracleBaseDAO<Peso> implements PesoDAO {
 					+ "DELETE FROM T_HLT_PESO "
 					+ "WHERE CD_PESO = ?";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setInt(1, id);
 			
 			super.persistir(statement);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}			
 		}
 	}
 

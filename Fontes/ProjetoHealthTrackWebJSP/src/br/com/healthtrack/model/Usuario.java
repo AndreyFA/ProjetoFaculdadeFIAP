@@ -2,7 +2,7 @@ package br.com.healthtrack.model;
 
 import java.io.Serializable;
 import java.security.InvalidParameterException;
-import java.time.LocalDate;
+import java.util.Calendar;
 
 /***
  * Classe que representa um usuário no sistema.
@@ -21,7 +21,7 @@ public class Usuario extends Persistivel<Usuario> implements Serializable {
 	/***
 	 * Data de nascimento do usuário.
 	 */
-	private LocalDate dataNascimento;
+	private Calendar dataNascimento;
 	
 	/***
 	 * Altura do usuário (em metros).
@@ -60,7 +60,7 @@ public class Usuario extends Persistivel<Usuario> implements Serializable {
 	 * @param email E-mail de contato do usuário.
 	 * @param senha Senha de acesso do usuário.
 	 */
-	public Usuario(String nomeCompleto, LocalDate dataNascimento, float altura, String genero, String email, String senha) {
+	public Usuario(String nomeCompleto, Calendar dataNascimento, float altura, String genero, String email, String senha) {
 		setNomeCompleto(nomeCompleto);
 		setDataNascimento(dataNascimento);
 		setAltura(altura);
@@ -95,7 +95,7 @@ public class Usuario extends Persistivel<Usuario> implements Serializable {
 	 * Retorna a data de nascimento do usuário.
 	 * @return Data de nascimento do usuário.
 	 */
-	public LocalDate getDataNascimento() {
+	public Calendar getDataNascimento() {
 		return dataNascimento;
 	}
 	
@@ -104,7 +104,7 @@ public class Usuario extends Persistivel<Usuario> implements Serializable {
 	 * @param dataNascimento Data de nascimento do usuário.
 	 * @throws InvalidParameterException Não é permitida uma data de nascimento nula.
 	 */
-	public void setDataNascimento(LocalDate dataNascimento) throws InvalidParameterException {
+	public void setDataNascimento(Calendar dataNascimento) throws InvalidParameterException {
 		
 		if(dataNascimento == null) {
 			throw new InvalidParameterException("Informe uma data de nascimento válida.");
@@ -211,30 +211,5 @@ public class Usuario extends Persistivel<Usuario> implements Serializable {
 		
 		setSenha(novaSenha);
 		return this.senha == novaSenha;	
-	}
-	
-	@Override
-	public Usuario cadastrar() {
-		// TODO Implementar regra com o banco de dados.
-		return null;
-	}
-
-	@Override
-	public Usuario alterar() {
-		// TODO Implementar regra com o banco de dados.
-		return null;
-	}
-
-	@Override
-	public boolean deletar(int codigo) {
-		// TODO Implementar regra com o banco de dados.
-		return false;
-	}
-	
-	@Override
-	public Usuario buscarPorCodigo(int codigo) {
-		// TODO Implementar regra com o banco de dados.
-		this.setCodigo(codigo);
-		return this;
 	}
 }

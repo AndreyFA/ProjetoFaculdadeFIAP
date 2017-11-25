@@ -164,29 +164,4 @@ public class PressaoArterial extends Persistivel<PressaoArterial> implements Ser
 		
 		this.usuario = usuario;
 	}
-	
-	@Override
-	public PressaoArterial cadastrar() {
-		// TODO Implementar regra com o banco de dados.
-		return null;
-	}
-
-	@Override
-	public PressaoArterial alterar() {
-		// TODO Implementar regra com o banco de dados.
-		return null;
-	}
-
-	@Override
-	public boolean deletar(int codigo) {
-		// TODO Implementar regra com o banco de dados.
-		return false;
-	}
-	
-	@Override
-	public PressaoArterial buscarPorCodigo(int codigo) {
-		// TODO Implementar regra com o banco de dados.
-		this.setCodigo(codigo);
-		return this;
-	}
 }

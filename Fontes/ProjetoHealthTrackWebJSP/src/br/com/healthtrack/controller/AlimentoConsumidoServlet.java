@@ -1,7 +1,8 @@
 package br.com.healthtrack.controller;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -27,7 +28,7 @@ public class AlimentoConsumidoServlet extends BaseController {
 	public void init() throws ServletException {
 		this.alimentoConsumidoDao = DAOFactory.getAlimentoConsumidoDAO();
 		this.tipoRefeicaoDao = DAOFactory.getTipoRefeicaoDAO();
-	}
+	}	
 	
 	@Override
 	protected void abrirFormularioEdicao(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -61,37 +62,59 @@ public class AlimentoConsumidoServlet extends BaseController {
 
 	@Override
 	protected void cadastrar(HttpServletRequest req, HttpServletResponse resp, Usuario usuario) throws ServletException, IOException {
-		int calorias = Integer.parseInt(req.getParameter("calorias"));			
-		LocalDateTime horario = LocalDateTime.now();
-		String descricao = req.getParameter("descricao");
 		
-		TipoRefeicao tipo = new TipoRefeicao();
-		tipo.setCodigo(Integer.parseInt(req.getParameter("tipoRefeicao")));
-		
-		this.alimentoConsumidoDao.cadastrar(new AlimentoConsumido(calorias, horario, descricao, tipo, usuario));
-		
-		listar(req, resp, usuario);
+		try {
+			int calorias = Integer.parseInt(req.getParameter("calorias"));
+			
+			SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+			Calendar data = Calendar.getInstance();
+			data.setTime(format.parse(req.getParameter("data")));
+			
+			String descricao = req.getParameter("descricao");
+			
+			TipoRefeicao tipo = new TipoRefeicao();
+			tipo.setCodigo(Integer.parseInt(req.getParameter("tipoRefeicao")));
+			
+			this.alimentoConsumidoDao.cadastrar(new AlimentoConsumido(calorias, data, descricao, tipo, usuario));
+			
+			listar(req, resp, usuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+			req.setAttribute("erro", "Falha ao cadastrar.");
+		}		
 	}
 
 	@Override
 	protected void editar(HttpServletRequest req, HttpServletResponse resp, Usuario usuario) throws ServletException, IOException {
-		int codigo = Integer.parseInt(req.getParameter("codigo"));	
-		int calorias = Integer.parseInt(req.getParameter("calorias"));			
-		LocalDateTime horario = LocalDateTime.now();
-		String descricao = req.getParameter("descricao");
 		
-		TipoRefeicao tipo = new TipoRefeicao();
-		tipo.setCodigo(Integer.parseInt(req.getParameter("tipoRefeicao")));
+		try {
+			int codigo = Integer.parseInt(req.getParameter("codigo"));	
+			int calorias = Integer.parseInt(req.getParameter("calorias"));			
+			
+			SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+			Calendar data = Calendar.getInstance();
+			data.setTime(format.parse(req.getParameter("data")));
+			
+			
+			String descricao = req.getParameter("descricao");
+			
+			TipoRefeicao tipo = new TipoRefeicao();
+			tipo.setCodigo(Integer.parseInt(req.getParameter("tipoRefeicao")));
+			
+			AlimentoConsumido alimento = this.alimentoConsumidoDao.obterPorId(codigo);
+			alimento.setCalorias(calorias);
+			alimento.setDescricao(descricao);
+			alimento.setData(data);
+			alimento.setTipo(tipo);	
+			
+			this.alimentoConsumidoDao.atualizar(alimento);		
+			
+			listar(req, resp, usuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+			req.setAttribute("erro", "Falha ao editar.");
+		}
 		
-		AlimentoConsumido alimento = this.alimentoConsumidoDao.obterPorId(codigo);
-		alimento.setCalorias(calorias);
-		alimento.setDescricao(descricao);
-		alimento.setHorario(horario);
-		alimento.setTipo(tipo);	
-		
-		this.alimentoConsumidoDao.atualizar(alimento);		
-		
-		listar(req, resp, usuario);
 	}
 
 	@Override

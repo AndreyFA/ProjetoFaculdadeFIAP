@@ -22,6 +22,19 @@ public abstract class OracleBaseDAO<T> {
 		return resultSet;
 	}
 	
+	protected Connection getConnection() {
+		try {		
+			if(this.connection.isClosed()) {
+				this.connection = null;
+				this.connection = ConnectionManager.getInstance().getConnection();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return this.connection;
+	}
+	
 	protected void persistir(PreparedStatement statement) throws SQLException {
 		try {
 			this.connection.setAutoCommit(false);

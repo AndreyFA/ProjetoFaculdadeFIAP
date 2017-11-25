@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -17,20 +16,20 @@
 					<div class="col-md-4 col-md-offset-4">
 						<div class="jumbotron login-background">
 							<div class="page-header">
-								<img src="resources/img/logo.png" alt="" class="hidden-xs"><span
-									class="fonte-titulo">HEALTH TRACK</span>
+								<img src="resources/img/logo.png" alt="" class="hidden-xs">
+								<span class="fonte-titulo">HEALTH TRACK</span>
 							</div>
 							<div class="container-fluid">
 								<div class="row">
 									<div class="col-md-12">
 										<form class="form-horizontal" action="login" method="post">
 											<div class="form-group">
-												<label for="login">E-mail</label> <input type="email"
-													class="form-control tipoEmail" id="login" name="email" required>
+												<label for="login">E-mail</label> 
+												<input type="email" class="form-control tipoEmail" id="login" name="email" required>
 											</div>
 											<div class="form-group">
-												<label for="senha">Senha</label> <input type="password"
-													class="form-control" id="senha" name="senha" required>
+												<label for="senha">Senha</label> 
+												<input type="password" class="form-control" id="senha" name="senha" required>
 											</div>
 											<div class="row">
 												<div class="col-md-12">
@@ -43,7 +42,12 @@
 									<br>
 									<div class="row">
 										<div class="col-md-12 text-right">
-											É novo por aqui? <a href="newAccount.jsp"> Cadastre-se </a>
+											É novo por aqui? <a href="novoUsuario.jsp"> Cadastre-se </a>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12 text-right">
+											<a href="recuperarSenha.jsp">Esqueci minha senha</a>
 										</div>
 									</div>
 								</div>

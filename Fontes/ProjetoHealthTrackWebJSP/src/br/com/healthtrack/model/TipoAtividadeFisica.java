@@ -53,29 +53,4 @@ public class TipoAtividadeFisica extends Persistivel<TipoAtividadeFisica> implem
 		
 		this.nome = nome;
 	}
-	
-	@Override
-	public TipoAtividadeFisica cadastrar() {
-		// TODO Implementar regra com o banco de dados.
-		return null;
-	}
-
-	@Override
-	public TipoAtividadeFisica alterar() {
-		// TODO Implementar regra com o banco de dados.
-		return null;
-	}
-
-	@Override
-	public boolean deletar(int codigo) {
-		// TODO Implementar regra com o banco de dados.
-		return false;
-	}
-	
-	@Override
-	public TipoAtividadeFisica buscarPorCodigo(int codigo) {
-		// TODO Implementar regra com o banco de dados.
-		this.setCodigo(codigo);
-		return this;
-	}
 }

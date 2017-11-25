@@ -28,7 +28,7 @@ public class ConnectionManager {
 			
 			connection = DriverManager.getConnection(
 					"jdbc:oracle:thin:@localhost:1521:xe",
-					"SYSTEM", "12345");			
+					"SYSTEM", "12345");
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

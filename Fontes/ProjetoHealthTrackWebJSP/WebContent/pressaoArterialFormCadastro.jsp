@@ -30,7 +30,10 @@
 			<input type="text" class="form-control tipoCalendario" id="dataEdicao" name="data" required>
 		</div>
 		<div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+			<c:url value="pressaoArterial" var="link">
+				<c:param name="opcao" value="listar" />
+			</c:url>
+			<a class="btn btn-default" href="${link }">Cancelar</a>
 			<input type="submit" class="btn btn-primary btnFinaliza" value="Salvar" />
 		</div>
 	</form>	

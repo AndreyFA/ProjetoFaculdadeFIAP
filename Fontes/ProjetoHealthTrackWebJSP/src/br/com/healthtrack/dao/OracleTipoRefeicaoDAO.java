@@ -2,6 +2,7 @@ package br.com.healthtrack.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import br.com.healthtrack.dao.interfaces.TipoRefeicaoDAO;
@@ -22,7 +23,7 @@ public class OracleTipoRefeicaoDAO extends OracleBaseDAO<TipoRefeicao> implement
 					+ "SELECT * "
 					+ "FROM T_HLT_TIPO_REFEICAO";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			ResultSet resultSet = super.executarBusca(statement);
 			
 			while (resultSet.next()) {
@@ -35,6 +36,12 @@ public class OracleTipoRefeicaoDAO extends OracleBaseDAO<TipoRefeicao> implement
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}			
 		}
 		
 		return tiposRefeicao;
@@ -50,7 +57,7 @@ public class OracleTipoRefeicaoDAO extends OracleBaseDAO<TipoRefeicao> implement
 					+ "FROM T_HLT_TIPO_REFEICAO "
 					+ "WHERE CD_TIPO_REFEICAO = ?";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setInt(1, id);
 			
 			ResultSet resultSet = super.executarBusca(statement);
@@ -65,6 +72,12 @@ public class OracleTipoRefeicaoDAO extends OracleBaseDAO<TipoRefeicao> implement
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}			
 		}
 		
 		return tipoRefeicao;
@@ -81,13 +94,19 @@ public class OracleTipoRefeicaoDAO extends OracleBaseDAO<TipoRefeicao> implement
 					+ "SQ_TIPO_REFEICAO.NEXTVAL,"
 					+ "?)";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setString(1, entidade.getNome());
 			
 			super.persistir(statement);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}			
 		}
 	}
 
@@ -99,7 +118,7 @@ public class OracleTipoRefeicaoDAO extends OracleBaseDAO<TipoRefeicao> implement
 					+ "NM_REFEICAO = ? "
 					+ "WHERE CD_TIPO_REFEICAO = ?";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setString(1, entidade.getNome());
 			statement.setInt(2, entidade.getCodigo());
 			
@@ -107,6 +126,12 @@ public class OracleTipoRefeicaoDAO extends OracleBaseDAO<TipoRefeicao> implement
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}			
 		}		
 	}
 
@@ -117,12 +142,18 @@ public class OracleTipoRefeicaoDAO extends OracleBaseDAO<TipoRefeicao> implement
 					+ "DELETE FROM T_HLT_TIPO_REFEICAO "
 					+ "WHERE CD_TIPO_REFEICAO = ?";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setInt(1, id);
 			
 			super.persistir(statement);
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}			
 		}		
 	}
 

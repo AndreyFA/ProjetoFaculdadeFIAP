@@ -1,9 +1,11 @@
 package br.com.healthtrack.dao;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import br.com.healthtrack.dao.interfaces.UsuarioDAO;
 import br.com.healthtrack.model.Usuario;
@@ -24,14 +26,19 @@ public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioD
 				+ "FROM T_HLT_USUARIO";
 		
 		try {			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			ResultSet resultSet = super.executarBusca(statement);
 			
 			while(resultSet.next()) {
 				Usuario usuario = new Usuario();
 				usuario.setCodigo(resultSet.getInt("CD_USUARIO"));
 				usuario.setNomeCompleto(resultSet.getString("NM_USUARIO"));
-				usuario.setDataNascimento(DateUtils.asLocalDate(resultSet.getDate("DT_NASCIMENTO")));
+				
+				Date data = resultSet.getDate("DT_NASCIMENTO");
+				Calendar dataNascimento = Calendar.getInstance();
+				dataNascimento.setTimeInMillis(data.getTime());
+				
+				usuario.setDataNascimento(dataNascimento);
 				usuario.setAltura(resultSet.getInt("VL_ALTURA"));
 				usuario.setGenero(resultSet.getString("DS_GENERO"));
 				usuario.setEmail(resultSet.getString("DS_EMAIL"));
@@ -42,6 +49,12 @@ public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioD
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}			
 		}
 
 		return usuarios;
@@ -57,7 +70,7 @@ public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioD
 				+ "WHERE CD_USUARIO = ?";
 		
 		try {			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setInt(1, id);
 			
 			ResultSet resultSet = super.executarBusca(statement);
@@ -66,7 +79,12 @@ public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioD
 				usuario = new Usuario();
 				usuario.setCodigo(resultSet.getInt("CD_USUARIO"));
 				usuario.setNomeCompleto(resultSet.getString("NM_USUARIO"));
-				usuario.setDataNascimento(DateUtils.asLocalDate(resultSet.getDate("DT_NASCIMENTO")));
+				
+				Date data = resultSet.getDate("DT_NASCIMENTO");
+				Calendar dataNascimento = Calendar.getInstance();
+				dataNascimento.setTimeInMillis(data.getTime());
+				
+				usuario.setDataNascimento(dataNascimento);				
 				usuario.setAltura(resultSet.getInt("VL_ALTURA"));
 				usuario.setGenero(resultSet.getString("DS_GENERO"));
 				usuario.setEmail(resultSet.getString("DS_EMAIL"));
@@ -76,6 +94,12 @@ public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioD
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}			
 		}
 
 		return usuario;
@@ -102,9 +126,9 @@ public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioD
 					+ "?,"
 					+ "?)";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setString(1, entidade.getNomeCompleto());
-			statement.setDate(2, DateUtils.asSqlDate(entidade.getDataNascimento()));
+			statement.setDate(2, new Date(entidade.getDataNascimento().getTimeInMillis()));
 			statement.setFloat(3, entidade.getAltura());
 			statement.setString(4, entidade.getGenero());
 			statement.setString(5, entidade.getEmail());
@@ -114,6 +138,12 @@ public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioD
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}			
 		}	
 	}
 
@@ -130,9 +160,9 @@ public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioD
 					+ "DS_SENHA = ? "
 					+ "WHERE CD_USUARIO = ?";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setString(1, entidade.getNomeCompleto());
-			statement.setDate(2, DateUtils.asSqlDate(entidade.getDataNascimento()));
+			statement.setDate(2, new Date(entidade.getDataNascimento().getTimeInMillis()));
 			statement.setFloat(3, entidade.getAltura());
 			statement.setString(4, entidade.getGenero());
 			statement.setString(5, entidade.getEmail());
@@ -143,6 +173,12 @@ public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioD
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}			
 		}	
 	}
 
@@ -153,13 +189,19 @@ public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioD
 					+ "DELETE FROM T_HLT_USUARIO "
 					+ "WHERE CD_USUARIO = ?";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setInt(1, id);
 			
 			super.persistir(statement);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}			
 		}	
 	}
 
@@ -174,7 +216,7 @@ public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioD
 				+ "  AND DS_SENHA = ? ";
 		
 		try {			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setString(1, email);
 			statement.setString(2, senha);
 			
@@ -184,7 +226,12 @@ public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioD
 				usuario = new Usuario();
 				usuario.setCodigo(resultSet.getInt("CD_USUARIO"));
 				usuario.setNomeCompleto(resultSet.getString("NM_USUARIO"));
-				usuario.setDataNascimento(DateUtils.asLocalDate(resultSet.getDate("DT_NASCIMENTO")));
+				
+				Date data = resultSet.getDate("DT_NASCIMENTO");
+				Calendar dataNascimento = Calendar.getInstance();
+				dataNascimento.setTimeInMillis(data.getTime());
+				
+				usuario.setDataNascimento(dataNascimento);
 				usuario.setAltura(resultSet.getInt("VL_ALTURA"));
 				usuario.setGenero(resultSet.getString("DS_GENERO"));
 				usuario.setEmail(resultSet.getString("DS_EMAIL"));
@@ -194,9 +241,105 @@ public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioD
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}			
 		}
 
 		return usuario;
+	}
+	
+	@Override
+	public boolean emailJaCadastrado(String email) {
+		Usuario usuario = null;
+		
+		String sql = ""
+				+ "SELECT * "
+				+ "FROM T_HLT_USUARIO "
+				+ "WHERE DS_EMAIL = ?";
+		
+		try {			
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
+			statement.setString(1, email);
+			
+			ResultSet resultSet = super.executarBusca(statement);
+			
+			while(resultSet.next()) {
+				usuario = new Usuario();
+				usuario.setCodigo(resultSet.getInt("CD_USUARIO"));
+				usuario.setNomeCompleto(resultSet.getString("NM_USUARIO"));
+				
+				Date data = resultSet.getDate("DT_NASCIMENTO");
+				Calendar dataNascimento = Calendar.getInstance();
+				dataNascimento.setTimeInMillis(data.getTime());
+				
+				usuario.setDataNascimento(dataNascimento);
+				usuario.setAltura(resultSet.getInt("VL_ALTURA"));
+				usuario.setGenero(resultSet.getString("DS_GENERO"));
+				usuario.setEmail(resultSet.getString("DS_EMAIL"));
+				usuario.setSenha(resultSet.getString("DS_SENHA"));
+				break;				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}			
+		}
+
+		return usuario != null;
+	}
+	
+	@Override
+	public String obterSenhaPorEmail(String email) {
+		Usuario usuario = null;
+		
+		String sql = ""
+				+ "SELECT * "
+				+ "FROM T_HLT_USUARIO "
+				+ "WHERE DS_EMAIL = ?";
+		
+		try {			
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
+			statement.setString(1, email);
+			
+			ResultSet resultSet = super.executarBusca(statement);
+			
+			while(resultSet.next()) {
+				usuario = new Usuario();
+				usuario.setCodigo(resultSet.getInt("CD_USUARIO"));
+				usuario.setNomeCompleto(resultSet.getString("NM_USUARIO"));
+				
+				Date data = resultSet.getDate("DT_NASCIMENTO");
+				Calendar dataNascimento = Calendar.getInstance();
+				dataNascimento.setTimeInMillis(data.getTime());
+				
+				usuario.setDataNascimento(dataNascimento);
+				usuario.setAltura(resultSet.getInt("VL_ALTURA"));
+				usuario.setGenero(resultSet.getString("DS_GENERO"));
+				usuario.setEmail(resultSet.getString("DS_EMAIL"));
+				usuario.setSenha(resultSet.getString("DS_SENHA"));
+				break;				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}			
+		}
+
+		return usuario.getSenha();
 	}
 
 }

@@ -2,6 +2,7 @@ package br.com.healthtrack.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import br.com.healthtrack.dao.interfaces.PressaoArterialDAO;
@@ -23,7 +24,7 @@ public class OraclePressaoArterialDAO extends OracleBaseDAO<PressaoArterial> imp
 					+ "SELECT * "
 					+ "FROM T_HLT_PRESSAO_ARTERIAL";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			ResultSet resultSet = super.executarBusca(statement);
 			
 			while (resultSet.next()) {
@@ -39,6 +40,12 @@ public class OraclePressaoArterialDAO extends OracleBaseDAO<PressaoArterial> imp
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}			
 		}
 		
 		return pressoesArteriais;
@@ -54,7 +61,7 @@ public class OraclePressaoArterialDAO extends OracleBaseDAO<PressaoArterial> imp
 					+ "FROM T_HLT_PRESSAO_ARTERIAL "
 					+ "WHERE CD_PRESSAO_ARTERIAL = ?";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setInt(1, id);
 			
 			ResultSet resultSet = super.executarBusca(statement);
@@ -72,6 +79,12 @@ public class OraclePressaoArterialDAO extends OracleBaseDAO<PressaoArterial> imp
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}			
 		}
 		
 		return pressaoArterial;
@@ -96,7 +109,7 @@ public class OraclePressaoArterialDAO extends OracleBaseDAO<PressaoArterial> imp
 					+ "?,"
 					+ "?)";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setInt(1, entidade.getPressaoSistolica());
 			statement.setInt(2, entidade.getPressaoDiastolica());
 			statement.setDate(3, DateUtils.asSqlDate(entidade.getData()));
@@ -107,6 +120,12 @@ public class OraclePressaoArterialDAO extends OracleBaseDAO<PressaoArterial> imp
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}			
 		}		
 	}
 
@@ -122,7 +141,7 @@ public class OraclePressaoArterialDAO extends OracleBaseDAO<PressaoArterial> imp
 					+ "CD_USUARIO = ? "
 					+ "WHERE CD_PRESSAO_ARTERIAL = ?";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setInt(1, entidade.getPressaoSistolica());
 			statement.setInt(2, entidade.getPressaoDiastolica());
 			statement.setDate(3, DateUtils.asSqlDate(entidade.getData()));
@@ -133,6 +152,12 @@ public class OraclePressaoArterialDAO extends OracleBaseDAO<PressaoArterial> imp
 			super.persistir(statement);	
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}			
 		}		
 	}
 
@@ -143,12 +168,18 @@ public class OraclePressaoArterialDAO extends OracleBaseDAO<PressaoArterial> imp
 					+ "DELETE FROM T_HLT_PRESSAO_ARTERIAL "
 					+ "WHERE CD_PRESSAO_ARTERIAL = ?";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setInt(1, id);
 			
 			super.persistir(statement);
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}			
 		}		
 	}
 

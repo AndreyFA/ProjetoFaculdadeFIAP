@@ -2,7 +2,7 @@ package br.com.healthtrack.model;
 
 import java.io.Serializable;
 import java.security.InvalidParameterException;
-import java.time.LocalDateTime;
+import java.util.Calendar;
 /***
  * Classe que representa os alimentos consumidos pelo usuário.
  * @author Andrey Frazatti Alves
@@ -21,7 +21,7 @@ public class AlimentoConsumido extends Persistivel<AlimentoConsumido> implements
 	/***
 	 * Horário da refeição.
 	 */
-	private LocalDateTime dataHorario;
+	private Calendar data;
 	
 	/***
 	 * Descrição do alimento consumido.
@@ -48,14 +48,14 @@ public class AlimentoConsumido extends Persistivel<AlimentoConsumido> implements
 	/***
 	 * Criar uma nova instância de alimento consumido.
 	 * @param calorias Número de calorias contida no alimento.
-	 * @param horario Horário da refeição.
+	 * @param data Data da refeição.
 	 * @param descricao do alimento consumido.
 	 * @param tipo Tipo da refeição.
 	 * @param usuario Referência do usuário.
 	 */
-	public AlimentoConsumido(int calorias, LocalDateTime horario, String descricao, TipoRefeicao tipo, Usuario usuario) {
+	public AlimentoConsumido(int calorias, Calendar data, String descricao, TipoRefeicao tipo, Usuario usuario) {
 		setCalorias(calorias);
-		setHorario(horario);
+		setData(data);
 		setDescricao(descricao);
 		setTipo(tipo);
 		setUsuario(usuario);
@@ -78,25 +78,25 @@ public class AlimentoConsumido extends Persistivel<AlimentoConsumido> implements
 	}
 	
 	/***
-	 * Retorna o horário da refeição.	
-	 * @return horário da refeição.
+	 * Retorna a data da refeição.	
+	 * @return data da refeição.
 	 */
-	public LocalDateTime getHorario() {
-		return dataHorario;
+	public Calendar getData() {
+		return data;
 	}
 	
 	/***
-	 * Atribui o horário da refeição.
-	 * @param horario Horário da refeição.
+	 * Atribui a data da refeição.
+	 * @param data Data da refeição.
 	 * @throws InvalidParameterException Não é permitido uma data nula.
 	 */
-	public void setHorario(LocalDateTime horario) throws InvalidParameterException {
+	public void setData(Calendar data) throws InvalidParameterException {
 		
-		if(horario == null) {
+		if(data == null) {
 			throw new InvalidParameterException("Informe uma data válida.");
 		}
 		
-		this.dataHorario = horario;
+		this.data = data;
 	}
 	
 	/***
@@ -163,30 +163,5 @@ public class AlimentoConsumido extends Persistivel<AlimentoConsumido> implements
 		}
 		
 		this.usuario = usuario;
-	}
-	
-	@Override
-	public AlimentoConsumido cadastrar() {
-		// TODO Implementar regra com o banco de dados.
-		return null;
-	}
-
-	@Override
-	public AlimentoConsumido alterar() {
-		// TODO Implementar regra com o banco de dados.
-		return null;
-	}
-
-	@Override
-	public boolean deletar(int codigo) {
-		// TODO Implementar regra com o banco de dados.
-		return false;
-	}
-	
-	@Override
-	public AlimentoConsumido buscarPorCodigo(int codigo) {
-		// TODO Implementar regra com o banco de dados.
-		this.setCodigo(codigo);
-		return this;
 	}
 }

@@ -16,9 +16,11 @@
 	</div>
 	<br>
 	<form action="atividadeFisica" method="post">
+		<input type="hidden" name="opcao" value="cadastrar" />
 		<div class="form-group">
 			<label for="tipoAtividadeInclusao">Tipo de atividade</label>
 			<select class="form-control" id="tipoAtividadeInclusao" name="tipoAtividadeFisica" required>
+				<option value="0">Selecione</option>
 				<c:forEach items="${tipoAtividadesFisicas }" var="t">
 					<option value="${t.getCodigo() }">${t.getNome() }</option>
 				</c:forEach>
@@ -41,7 +43,10 @@
 			<input type="text" class="form-control" id="descricaoInclusao" name="descricao">
 		</div>
 		<div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+			<c:url value="atividadeFisica" var="link">
+				<c:param name="opcao" value="listar" />
+			</c:url>
+			<a class="btn btn-default" href="${link }">Cancelar</a>
 			<input type="submit" class="btn btn-primary btnFinaliza" value="Salvar" />
 		</div>
 	</form>

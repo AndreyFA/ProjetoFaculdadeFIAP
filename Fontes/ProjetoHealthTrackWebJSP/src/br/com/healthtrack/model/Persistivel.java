@@ -60,30 +60,4 @@ public abstract class Persistivel<T> implements Serializable{
 	public Persistivel() {
 		
 	}
-	
-	/***
-	 * Cadastra a entidade no banco de dados.
-	 * @return Entidade cadastrada com o codigo preenchido.
-	 */
-	public abstract T cadastrar();
-	
-	/***
-	 * Altera a entidade no banco de dados.
-	 * @return Entidade alterada.
-	 */
-	public abstract T alterar();
-	
-	/***
-	 * Remove a entidade que possui o codigo informado.
-	 * @param codigo Codigo da entidade no banco de dados.
-	 * @return true para sucesso e false para falha.
-	 */
-	public abstract boolean deletar(int codigo);
-	
-	/***
-	 * Retorna a entidade que possui o codigo informado.
-	 * @param codigo Codigo da entidade no banco de dados.
-	 * @return Entidade que possui o codigo informado.
-	 */
-	public abstract T buscarPorCodigo(int codigo);
 }

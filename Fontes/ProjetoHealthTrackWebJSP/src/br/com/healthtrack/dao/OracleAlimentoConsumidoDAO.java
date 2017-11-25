@@ -1,11 +1,14 @@
 package br.com.healthtrack.dao;
 
-import java.sql.*;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import br.com.healthtrack.dao.interfaces.AlimentoConsumidoDAO;
 import br.com.healthtrack.model.AlimentoConsumido;
-import br.com.healthtrack.utils.DateUtils;
 
 public class OracleAlimentoConsumidoDAO extends OracleBaseDAO<AlimentoConsumido> implements AlimentoConsumidoDAO {
 	
@@ -24,14 +27,19 @@ public class OracleAlimentoConsumidoDAO extends OracleBaseDAO<AlimentoConsumido>
 					+ "SELECT * "
 					+ "FROM T_HLT_ALIMENTO_CONSUMIDO";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			ResultSet resultSet = super.executarBusca(statement);
 			
 			while(resultSet.next()) {				
 				AlimentoConsumido alimentoConsumido = new AlimentoConsumido();
 				alimentoConsumido.setCodigo(resultSet.getInt("CD_ALIMENTO_CONSUMIDO"));
 				alimentoConsumido.setCalorias(resultSet.getInt("NR_CALORIAS"));
-				alimentoConsumido.setHorario(DateUtils.asLocalDateTime(resultSet.getDate("HR_REFEICAO")));
+				
+				Date data = resultSet.getDate("HR_REFEICAO");
+				Calendar dataHorario = Calendar.getInstance();
+				dataHorario.setTimeInMillis(data.getTime());
+				
+				alimentoConsumido.setData(dataHorario);
 				alimentoConsumido.setDescricao(resultSet.getString("DS_REFEICAO"));
 				alimentoConsumido.setTipo(new OracleTipoRefeicaoDAO().obterPorId(resultSet.getInt("CD_TIPO_REFEICAO")));
 				alimentoConsumido.setUsuario(new OracleUsuarioDAO().obterPorId(resultSet.getInt("CD_USUARIO")));			
@@ -41,7 +49,14 @@ public class OracleAlimentoConsumidoDAO extends OracleBaseDAO<AlimentoConsumido>
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-		}		
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+			
+		}
 		
 		return alimentosConsumidos;
 	}
@@ -57,7 +72,7 @@ public class OracleAlimentoConsumidoDAO extends OracleBaseDAO<AlimentoConsumido>
 					+ "FROM T_HLT_ALIMENTO_CONSUMIDO "
 					+ "WHERE CD_ALIMENTO_CONSUMIDO = ? ";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setInt(1, id);
 			
 			ResultSet resultSet = super.executarBusca(statement);					
@@ -66,7 +81,12 @@ public class OracleAlimentoConsumidoDAO extends OracleBaseDAO<AlimentoConsumido>
 				alimentoConsumido = new AlimentoConsumido();
 				alimentoConsumido.setCodigo(resultSet.getInt("CD_ALIMENTO_CONSUMIDO"));
 				alimentoConsumido.setCalorias(resultSet.getInt("NR_CALORIAS"));
-				alimentoConsumido.setHorario(DateUtils.asLocalDateTime(resultSet.getDate("HR_REFEICAO")));
+				
+				Date data = resultSet.getDate("HR_REFEICAO");
+				Calendar dataHorario = Calendar.getInstance();
+				dataHorario.setTimeInMillis(data.getTime());
+				
+				alimentoConsumido.setData(dataHorario);
 				alimentoConsumido.setDescricao(resultSet.getString("DS_REFEICAO"));
 				alimentoConsumido.setTipo(new OracleTipoRefeicaoDAO().obterPorId(resultSet.getInt("CD_TIPO_REFEICAO")));
 				alimentoConsumido.setUsuario(new OracleUsuarioDAO().obterPorId(resultSet.getInt("CD_USUARIO")));
@@ -75,6 +95,13 @@ public class OracleAlimentoConsumidoDAO extends OracleBaseDAO<AlimentoConsumido>
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+			
 		}		
 		
 		return alimentoConsumido;
@@ -99,9 +126,9 @@ public class OracleAlimentoConsumidoDAO extends OracleBaseDAO<AlimentoConsumido>
 					+ "?,"
 					+ "?)";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setDouble(1, entidade.getCalorias());
-			statement.setDate(2, DateUtils.asSqlDate(entidade.getHorario()));
+			statement.setDate(2, new Date(entidade.getData().getTimeInMillis()));
 			statement.setString(3, entidade.getDescricao());
 			statement.setInt(4, entidade.getTipo().getCodigo());
 			statement.setInt(5, entidade.getUsuario().getCodigo());
@@ -110,6 +137,13 @@ public class OracleAlimentoConsumidoDAO extends OracleBaseDAO<AlimentoConsumido>
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+			
 		}		
 	}
 
@@ -125,9 +159,9 @@ public class OracleAlimentoConsumidoDAO extends OracleBaseDAO<AlimentoConsumido>
 					+ "CD_USUARIO = ? "
 					+ "WHERE CD_ALIMENTO_CONSUMIDO = ?";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setDouble(1, entidade.getCalorias());
-			statement.setDate(2, DateUtils.asSqlDate(entidade.getHorario()));
+			statement.setDate(2, new Date(entidade.getData().getTimeInMillis()));
 			statement.setString(3, entidade.getDescricao());
 			statement.setInt(4, entidade.getTipo().getCodigo());
 			statement.setInt(5, entidade.getUsuario().getCodigo());
@@ -137,8 +171,14 @@ public class OracleAlimentoConsumidoDAO extends OracleBaseDAO<AlimentoConsumido>
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+			
+		}		
 	}
 
 	@Override
@@ -148,13 +188,20 @@ public class OracleAlimentoConsumidoDAO extends OracleBaseDAO<AlimentoConsumido>
 					+ "DELETE FROM T_HLT_ALIMENTO_CONSUMIDO "
 					+ "WHERE CD_ALIMENTO_CONSUMIDO = ?";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setInt(1, id);
 			
 			super.persistir(statement);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+			
 		}		
 	}
 }

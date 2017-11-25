@@ -63,29 +63,4 @@ public class TipoRefeicao extends Persistivel<TipoRefeicao> implements Serializa
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
-	
-	@Override
-	public TipoRefeicao cadastrar() {
-		// TODO Implementar regra com o banco de dados.
-		return null;
-	}
-
-	@Override
-	public TipoRefeicao alterar() {
-		// TODO Implementar regra com o banco de dados.
-		return null;
-	}
-
-	@Override
-	public boolean deletar(int codigo) {
-		// TODO Implementar regra com o banco de dados.
-		return false;
-	}
-	
-	@Override
-	public TipoRefeicao buscarPorCodigo(int codigo) {
-		// TODO Implementar regra com o banco de dados.
-		this.setCodigo(codigo);
-		return this;
-	}
 }

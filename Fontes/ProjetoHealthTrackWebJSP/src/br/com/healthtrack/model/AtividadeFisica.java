@@ -2,8 +2,8 @@ package br.com.healthtrack.model;
 
 import java.io.Serializable;
 import java.security.InvalidParameterException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
 /***
  * Classe que representa as atividades físicas realizadas pelo usuáro.
@@ -22,12 +22,12 @@ public class AtividadeFisica extends Persistivel<AtividadeFisica> implements Ser
 	/***
 	 * Data da atividade física.
 	 */
-	private LocalDate data;
+	private Calendar data;
 	
 	/***
 	 * Horário da atividade física.
 	 */
-	private LocalDateTime horario;
+	private Timestamp horario;
 	
 	/***
 	 * Descrição da atividade física.
@@ -60,7 +60,7 @@ public class AtividadeFisica extends Persistivel<AtividadeFisica> implements Ser
 	 * @param tipo Tipo da atividade física realizada.
 	 * @param usuario Referência do usuário.
 	 */
-	public AtividadeFisica(int calorias, LocalDate data, LocalDateTime horario, String descricao, TipoAtividadeFisica tipo, Usuario usuario) {
+	public AtividadeFisica(int calorias, Calendar data, Timestamp horario, String descricao, TipoAtividadeFisica tipo, Usuario usuario) {
 		setCalorias(calorias);
 		setData(data);
 		setHorario(horario);
@@ -89,7 +89,7 @@ public class AtividadeFisica extends Persistivel<AtividadeFisica> implements Ser
 	 * Retorna a data da atividade física.
 	 * @return Data da atividade física.
 	 */
-	public LocalDate getData()  {		
+	public Calendar getData()  {		
 		return data;
 	}
 	
@@ -98,7 +98,7 @@ public class AtividadeFisica extends Persistivel<AtividadeFisica> implements Ser
 	 * @param data Data da atividade física.
 	 * @throws InvalidParameterException Não é permitido uma data nula.
 	 */
-	public void setData(LocalDate data) throws InvalidParameterException {
+	public void setData(Calendar data) throws InvalidParameterException {
 		
 		if(data == null) {
 			throw new InvalidParameterException("Informe uma data válida.");
@@ -111,7 +111,7 @@ public class AtividadeFisica extends Persistivel<AtividadeFisica> implements Ser
 	 * Retorna o horário da atividade física.
 	 * @return Horário da atividade física.
 	 */
-	public LocalDateTime getHorario() {
+	public Timestamp getHorario() {
 		return horario;
 	}
 	
@@ -120,7 +120,7 @@ public class AtividadeFisica extends Persistivel<AtividadeFisica> implements Ser
 	 * @param horario Horário da atividade física.
 	 * @throws InvalidParameterException Não é permitido um horário nulo.
 	 */
-	public void setHorario(LocalDateTime horario) throws InvalidParameterException {
+	public void setHorario(Timestamp horario) throws InvalidParameterException {
 		
 		if(horario == null) {
 			throw new InvalidParameterException("Informe um horário válido.");
@@ -193,30 +193,5 @@ public class AtividadeFisica extends Persistivel<AtividadeFisica> implements Ser
 		}
 		
 		this.usuario = usuario;
-	}
-	
-	@Override
-	public AtividadeFisica cadastrar() {
-		// TODO Implementar regra com o banco de dados.
-		return null;
-	}
-
-	@Override
-	public AtividadeFisica alterar() {
-		// TODO Implementar regra com o banco de dados.
-		return null;
-	}
-
-	@Override
-	public boolean deletar(int codigo) {
-		// TODO Implementar regra com o banco de dados.
-		return false;
-	}
-	
-	@Override
-	public AtividadeFisica buscarPorCodigo(int codigo) {
-		// TODO Implementar regra com o banco de dados.
-		this.setCodigo(codigo);
-		return this;
 	}
 }

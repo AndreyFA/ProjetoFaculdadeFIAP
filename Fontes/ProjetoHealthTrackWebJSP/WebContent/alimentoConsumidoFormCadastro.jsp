@@ -32,18 +32,17 @@
 		</div>
 		<div class="form-group">
 			<label for="dataInclusao">Data</label>
-			<input type="text" class="form-control tipoCalendario" name="horario" id="dataInclusao" required>
-		</div>
-		<div class="form-group">
-			<label for="horarioInclusao">Horário</label> 
-			<input type="text" class="form-control tipoHorario" name="horario" id="horarioInclusao" required>
+			<input type="text" class="form-control tipoCalendario" name="data" id="dataInclusao" required>
 		</div>
 		<div class="form-group">
 			<label for="descricaoInclusao">Descrição</label>
 			<input type="text" class="form-control" name="descricao" id="descricaoInclusao">
 		</div>
 		<div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+			<c:url value="alimentoConsumido" var="link">
+				<c:param name="opcao" value="listar" />
+			</c:url>
+			<a class="btn btn-default" href="${link }">Cancelar</a>
 			<input type="submit" class="btn btn-primary btnFinaliza" value="Salvar" />
 		</div>
 	</form>

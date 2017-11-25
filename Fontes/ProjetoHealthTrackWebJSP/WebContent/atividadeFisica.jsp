@@ -34,8 +34,12 @@
 							<tr>
 								<td class="text-center">${a.getTipo().getNome() }</td>
 								<td class="text-center">${a.getCalorias() }</td>
-								<td class="text-center">${a.getData() }</td>
-								<td class="text-center">${a.getHorario() }</td>
+								<td class="text-center">
+									<fmt:formatDate type="date" value="${a.getData().time }" pattern="dd-MM-yyyy"/> 
+								</td>
+								<td class="text-center">
+									<fmt:formatDate type="time" value="${a.getHorario() }" pattern="hh:mm"/> 
+								</td>
 								<td class="text-center">${a.getDescricao() }</td>
 								<td align="center">
 									<c:url value="atividadeFisica" var="link">
@@ -60,19 +64,6 @@
 				<c:param name="opcao" value="cadastrar" />
 			</c:url>
 			<a class="btn btn-primary" href="${link }">Nova atividade</a>
-		</div>
-		<div class="col-md-3 col-md-offset-8">
-			<nav aria-label="...">
-				<ul class="pagination">
-					<li class="disabled"><a href="#" aria-label="Previous"><span
-							aria-hidden="true">&laquo;</span></a></li>
-					<li><a href="#">1 <span class="sr-only">(current)</span></a></li>
-					<li><a href="#">2 <span class="sr-only">(current)</span></a></li>
-					<li><a href="#">3 <span class="sr-only">(current)</span></a></li>
-					<li><a href="#">4 <span class="sr-only">(current)</span></a></li>
-					<li><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
-				</ul>
-			</nav>
 		</div>
 	</div>
 </div>

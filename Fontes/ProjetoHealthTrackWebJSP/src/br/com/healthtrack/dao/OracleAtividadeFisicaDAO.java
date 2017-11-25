@@ -1,12 +1,14 @@
 package br.com.healthtrack.dao;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import br.com.healthtrack.dao.interfaces.AtividadeFisicaDAO;
 import br.com.healthtrack.model.AtividadeFisica;
-import br.com.healthtrack.utils.DateUtils;
 
 public class OracleAtividadeFisicaDAO extends OracleBaseDAO<AtividadeFisica> implements AtividadeFisicaDAO {
 
@@ -23,15 +25,20 @@ public class OracleAtividadeFisicaDAO extends OracleBaseDAO<AtividadeFisica> imp
 					+ "SELECT * "
 					+ "FROM T_HLT_ATIVIDADE_FISICA";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			ResultSet resultSet = super.executarBusca(statement);
 			
 			while (resultSet.next()) {
 				AtividadeFisica atividadeFisica = new AtividadeFisica();
 				atividadeFisica.setCodigo(resultSet.getInt("CD_ATIVIDADE_FISICA"));
 				atividadeFisica.setCalorias(resultSet.getInt("NR_CALORIAS"));
-				atividadeFisica.setData(DateUtils.asLocalDate(resultSet.getDate("DT_ATIVIDADE")));
-				atividadeFisica.setHorario(DateUtils.asLocalDateTime(resultSet.getTimestamp("HR_ATIVIDADE")));
+				
+				Date data = resultSet.getDate("DT_ATIVIDADE");
+				Calendar dataAtividade = Calendar.getInstance();
+				dataAtividade.setTimeInMillis(data.getTime());
+				
+				atividadeFisica.setData(dataAtividade);
+				atividadeFisica.setHorario(resultSet.getTimestamp("HR_ATIVIDADE"));
 				atividadeFisica.setDescricao(resultSet.getString("DS_ATIVIDADE"));
 				atividadeFisica.setTipo(DAOFactory.getTipoAtividadeFisicaDAO().obterPorId(resultSet.getInt("CD_TIPO_ATIVIDADE_FISICA")));
 				atividadeFisica.setUsuario(DAOFactory.getUsuarioDAO().obterPorId(resultSet.getInt("CD_USUARIO")));
@@ -41,6 +48,13 @@ public class OracleAtividadeFisicaDAO extends OracleBaseDAO<AtividadeFisica> imp
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+			
 		}
 		
 		return atividadesFisicas;
@@ -56,7 +70,7 @@ public class OracleAtividadeFisicaDAO extends OracleBaseDAO<AtividadeFisica> imp
 					+ "FROM T_HLT_ATIVIDADE_FISICA "
 					+ "WHERE CD_ATIVIDADE_FISICA = ?";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setInt(1, id);
 			
 			ResultSet resultSet = super.executarBusca(statement);
@@ -65,8 +79,13 @@ public class OracleAtividadeFisicaDAO extends OracleBaseDAO<AtividadeFisica> imp
 				atividadeFisica = new AtividadeFisica();
 				atividadeFisica.setCodigo(resultSet.getInt("CD_ATIVIDADE_FISICA"));
 				atividadeFisica.setCalorias(resultSet.getInt("NR_CALORIAS"));
-				atividadeFisica.setData(DateUtils.asLocalDate(resultSet.getDate("DT_ATIVIDADE")));
-				atividadeFisica.setHorario(DateUtils.asLocalDateTime(resultSet.getTimestamp("HR_ATIVIDADE")));
+				
+				Date data = resultSet.getDate("DT_ATIVIDADE");
+				Calendar dataAtividade = Calendar.getInstance();
+				dataAtividade.setTimeInMillis(data.getTime());
+				
+				atividadeFisica.setData(dataAtividade);
+				atividadeFisica.setHorario(resultSet.getTimestamp("HR_ATIVIDADE"));
 				atividadeFisica.setDescricao(resultSet.getString("DS_ATIVIDADE"));
 				atividadeFisica.setTipo(DAOFactory.getTipoAtividadeFisicaDAO().obterPorId(resultSet.getInt("CD_TIPO_ATIVIDADE_FISICA")));
 				atividadeFisica.setUsuario(DAOFactory.getUsuarioDAO().obterPorId(resultSet.getInt("CD_USUARIO")));
@@ -76,6 +95,13 @@ public class OracleAtividadeFisicaDAO extends OracleBaseDAO<AtividadeFisica> imp
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+			
 		}
 		
 		return atividadeFisica;
@@ -102,10 +128,10 @@ public class OracleAtividadeFisicaDAO extends OracleBaseDAO<AtividadeFisica> imp
 					+ "?,"
 					+ "?)";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
-			statement.setInt(1, entidade.getCalorias());
-			statement.setDate(2, DateUtils.asSqlDate(entidade.getData()));
-			statement.setTimestamp(3, DateUtils.asSqlTimestamp(entidade.getHorario()));
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
+			statement.setInt(1, entidade.getCalorias());			
+			statement.setDate(2, new Date(entidade.getData().getTimeInMillis()));
+			statement.setTimestamp(3, entidade.getHorario());
 			statement.setString(4, entidade.getDescricao());
 			statement.setInt(5, entidade.getTipo().getCodigo());
 			statement.setInt(6, entidade.getUsuario().getCodigo());
@@ -114,6 +140,13 @@ public class OracleAtividadeFisicaDAO extends OracleBaseDAO<AtividadeFisica> imp
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+			
 		}
 	}
 
@@ -130,7 +163,7 @@ public class OracleAtividadeFisicaDAO extends OracleBaseDAO<AtividadeFisica> imp
 					+ "CD_USUARIO = ? "
 					+ "WHERE CD_ATIVIDADE_FISICA = ?";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setInt(1, entidade.getCalorias());
 			statement.setString(2, entidade.getData().toString());
 			statement.setString(3, entidade.getHorario().toString());
@@ -143,6 +176,13 @@ public class OracleAtividadeFisicaDAO extends OracleBaseDAO<AtividadeFisica> imp
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+			
 		}
 	}
 
@@ -153,13 +193,19 @@ public class OracleAtividadeFisicaDAO extends OracleBaseDAO<AtividadeFisica> imp
 					+ "DELETE FRO T_HLT_ATIVIDADE_FISICA "
 					+ "WHERE CD_ATIVIDADE_FISICA = ?";
 			
-			PreparedStatement statement = super.connection.prepareStatement(sql);
+			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setInt(1, id);
 			
 			super.persistir(statement);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				super.connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}			
 		}		
 	}
 
