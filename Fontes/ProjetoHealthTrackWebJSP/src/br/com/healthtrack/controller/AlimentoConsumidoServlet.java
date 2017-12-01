@@ -42,7 +42,7 @@ public class AlimentoConsumidoServlet extends BaseController {
 	}
 	
 	private void carregarTiposDeRefeicoes(HttpServletRequest req) {
-		List<TipoRefeicao> tipoRefeicoes = this.tipoRefeicaoDao.obterTodos();		
+		List<TipoRefeicao> tipoRefeicoes = this.tipoRefeicaoDao.obterTodos(null);		
 		req.setAttribute("tipoRefeicoes", tipoRefeicoes);
 	}
 
@@ -53,15 +53,23 @@ public class AlimentoConsumidoServlet extends BaseController {
 	}
 
 	@Override
-	protected void listar(HttpServletRequest req, HttpServletResponse resp, Usuario usuario) throws ServletException, IOException {
-		List<AlimentoConsumido> alimentosConsumidos = alimentoConsumidoDao.obterTodos();
+	protected void listar(HttpServletRequest req, HttpServletResponse resp, Usuario usuario, String mensagem) throws ServletException, IOException {
+		List<AlimentoConsumido> alimentosConsumidos = alimentoConsumidoDao.obterTodos(usuario);
 
 		req.setAttribute("alimentosConsumidos", alimentosConsumidos);
+		
+		if(super.mensagemSucesso.equals(mensagem))		
+			req.setAttribute("mensagemSucesso", mensagem);
+		else
+			req.setAttribute("mensagemErro", mensagem);
+		
 		req.getRequestDispatcher("alimentoConsumido.jsp").forward(req, resp);
 	}
 
 	@Override
 	protected void cadastrar(HttpServletRequest req, HttpServletResponse resp, Usuario usuario) throws ServletException, IOException {
+		
+		String mensagem = super.mensagemSucesso;
 		
 		try {
 			int calorias = Integer.parseInt(req.getParameter("calorias"));
@@ -77,15 +85,18 @@ public class AlimentoConsumidoServlet extends BaseController {
 			
 			this.alimentoConsumidoDao.cadastrar(new AlimentoConsumido(calorias, data, descricao, tipo, usuario));
 			
-			listar(req, resp, usuario);
 		} catch (Exception e) {
 			e.printStackTrace();
-			req.setAttribute("erro", "Falha ao cadastrar.");
-		}		
+			mensagem = super.mensagemErro;
+		}
+		
+		listar(req, resp, usuario, mensagem);
 	}
 
 	@Override
 	protected void editar(HttpServletRequest req, HttpServletResponse resp, Usuario usuario) throws ServletException, IOException {
+		
+		String mensagem = super.mensagemSucesso;
 		
 		try {
 			int codigo = Integer.parseInt(req.getParameter("codigo"));	
@@ -107,21 +118,30 @@ public class AlimentoConsumidoServlet extends BaseController {
 			alimento.setData(data);
 			alimento.setTipo(tipo);	
 			
-			this.alimentoConsumidoDao.atualizar(alimento);		
+			this.alimentoConsumidoDao.atualizar(alimento);	
 			
-			listar(req, resp, usuario);
 		} catch (Exception e) {
 			e.printStackTrace();
-			req.setAttribute("erro", "Falha ao editar.");
+			mensagem = super.mensagemErro;
 		}
+		
+		listar(req, resp, usuario, mensagem);
 		
 	}
 
 	@Override
 	protected void excluir(HttpServletRequest req, HttpServletResponse resp, Usuario usuario) throws ServletException, IOException {
-		int codigo = Integer.parseInt(req.getParameter("codigo"));
-		this.alimentoConsumidoDao.deletar(codigo);
 		
-		listar(req, resp, usuario);
+		String mensagem = super.mensagemSucesso;
+		
+		try {
+			int codigo = Integer.parseInt(req.getParameter("codigo"));
+			this.alimentoConsumidoDao.deletar(codigo);
+		} catch (Exception e) {
+			e.printStackTrace();
+			mensagem = super.mensagemErro;
+		}
+		
+		listar(req, resp, usuario, mensagem);
 	}
 }

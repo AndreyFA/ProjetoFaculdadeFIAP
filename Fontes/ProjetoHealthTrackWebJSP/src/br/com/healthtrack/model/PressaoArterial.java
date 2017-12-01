@@ -2,7 +2,7 @@ package br.com.healthtrack.model;
 
 import java.io.Serializable;
 import java.security.InvalidParameterException;
-import java.time.LocalDate;
+import java.util.Calendar;
 
 /***
  * Classe que representa a pressão arterial do usuário.
@@ -26,7 +26,7 @@ public class PressaoArterial extends Persistivel<PressaoArterial> implements Ser
 	/***
 	 * Data da medição.
 	 */
-	private LocalDate data;
+	private Calendar data;
 	
 	/***
 	 * Situação da pressão do usuário.
@@ -53,7 +53,7 @@ public class PressaoArterial extends Persistivel<PressaoArterial> implements Ser
 	 * @param data Data da medição.
 	 * @param usuario Referência do usuário.
 	 */
-	public PressaoArterial(int pressaoSistolica, int pressaoDiastolica, LocalDate data, Usuario usuario) {
+	public PressaoArterial(int pressaoSistolica, int pressaoDiastolica, Calendar data, Usuario usuario) {
 		setPressaoSistolica(pressaoSistolica);
 		setPressaoDiastolica(pressaoDiastolica);
 		setData(data);
@@ -97,7 +97,7 @@ public class PressaoArterial extends Persistivel<PressaoArterial> implements Ser
 	 * Retorna a data da medição.
 	 * @return Data da medição.
 	 */
-	public LocalDate getData() {
+	public Calendar getData() {
 		return data;
 	}
 	
@@ -106,7 +106,7 @@ public class PressaoArterial extends Persistivel<PressaoArterial> implements Ser
 	 * @param data Data da medição.
 	 * @throws InvalidParameterException Não é permitida uma data nula.
 	 */
-	public void setData(LocalDate data) throws InvalidParameterException {
+	public void setData(Calendar data) throws InvalidParameterException {
 		
 		if(data == null) {
 			throw new InvalidParameterException("Informe uma data válida.");
@@ -120,7 +120,16 @@ public class PressaoArterial extends Persistivel<PressaoArterial> implements Ser
 	 * @return Situação da pressão do usuário.
 	 */
 	public String getSituacao() {
-		return situacao;
+		if ((pressaoSistolica >= 120 && pressaoSistolica <= 140)
+				&& (pressaoDiastolica >= 80 && pressaoDiastolica <= 90)) {
+			return "Normal";
+		} 
+		else if (pressaoSistolica < 120){
+			return "Abaixo do normal";
+		} 
+		else {
+			return "Elevada";
+		}
 	}
 	
 	/***

@@ -9,7 +9,6 @@ import java.util.Calendar;
 
 import br.com.healthtrack.dao.interfaces.UsuarioDAO;
 import br.com.healthtrack.model.Usuario;
-import br.com.healthtrack.utils.DateUtils;
 
 public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioDAO {
 	
@@ -18,7 +17,7 @@ public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioD
 	}
 	
 	@Override
-	public ArrayList<Usuario> obterTodos() {
+	public ArrayList<Usuario> obterTodos(Usuario usuario) {
 		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
 		
 		String sql = ""
@@ -30,21 +29,21 @@ public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioD
 			ResultSet resultSet = super.executarBusca(statement);
 			
 			while(resultSet.next()) {
-				Usuario usuario = new Usuario();
-				usuario.setCodigo(resultSet.getInt("CD_USUARIO"));
-				usuario.setNomeCompleto(resultSet.getString("NM_USUARIO"));
+				Usuario u = new Usuario();
+				u.setCodigo(resultSet.getInt("CD_USUARIO"));
+				u.setNomeCompleto(resultSet.getString("NM_USUARIO"));
 				
 				Date data = resultSet.getDate("DT_NASCIMENTO");
 				Calendar dataNascimento = Calendar.getInstance();
 				dataNascimento.setTimeInMillis(data.getTime());
 				
-				usuario.setDataNascimento(dataNascimento);
-				usuario.setAltura(resultSet.getInt("VL_ALTURA"));
-				usuario.setGenero(resultSet.getString("DS_GENERO"));
-				usuario.setEmail(resultSet.getString("DS_EMAIL"));
-				usuario.setSenha(resultSet.getString("DS_SENHA"));
+				u.setDataNascimento(dataNascimento);
+				u.setAltura(resultSet.getInt("VL_ALTURA"));
+				u.setGenero(resultSet.getString("DS_GENERO"));
+				u.setEmail(resultSet.getString("DS_EMAIL"));
+				u.setSenha(resultSet.getString("DS_SENHA"));
 				
-				usuarios.add(usuario);
+				usuarios.add(u);
 			}
 			
 		} catch (SQLException e) {
@@ -253,34 +252,40 @@ public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioD
 	}
 	
 	@Override
-	public boolean emailJaCadastrado(String email) {
-		Usuario usuario = null;
+	public boolean emailJaCadastrado(String email, Usuario usuario) {
+		Usuario u = null;
 		
 		String sql = ""
 				+ "SELECT * "
 				+ "FROM T_HLT_USUARIO "
-				+ "WHERE DS_EMAIL = ?";
+				+ "WHERE DS_EMAIL = ? ";
+				
+		if (usuario != null)
+			sql += "  AND CD_USUARIO <> ?";
 		
 		try {			
 			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setString(1, email);
 			
+			if (usuario != null)
+				statement.setInt(2, usuario.getCodigo());
+
 			ResultSet resultSet = super.executarBusca(statement);
 			
 			while(resultSet.next()) {
-				usuario = new Usuario();
-				usuario.setCodigo(resultSet.getInt("CD_USUARIO"));
-				usuario.setNomeCompleto(resultSet.getString("NM_USUARIO"));
+				u = new Usuario();
+				u.setCodigo(resultSet.getInt("CD_USUARIO"));
+				u.setNomeCompleto(resultSet.getString("NM_USUARIO"));
 				
 				Date data = resultSet.getDate("DT_NASCIMENTO");
 				Calendar dataNascimento = Calendar.getInstance();
 				dataNascimento.setTimeInMillis(data.getTime());
 				
-				usuario.setDataNascimento(dataNascimento);
-				usuario.setAltura(resultSet.getInt("VL_ALTURA"));
-				usuario.setGenero(resultSet.getString("DS_GENERO"));
-				usuario.setEmail(resultSet.getString("DS_EMAIL"));
-				usuario.setSenha(resultSet.getString("DS_SENHA"));
+				u.setDataNascimento(dataNascimento);
+				u.setAltura(resultSet.getInt("VL_ALTURA"));
+				u.setGenero(resultSet.getString("DS_GENERO"));
+				u.setEmail(resultSet.getString("DS_EMAIL"));
+				u.setSenha(resultSet.getString("DS_SENHA"));
 				break;				
 			}
 			
@@ -294,7 +299,7 @@ public class OracleUsuarioDAO extends OracleBaseDAO<Usuario> implements UsuarioD
 			}			
 		}
 
-		return usuario != null;
+		return u != null;
 	}
 	
 	@Override

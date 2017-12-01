@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import br.com.healthtrack.dao.interfaces.TipoAtividadeFisicaDAO;
 import br.com.healthtrack.model.TipoAtividadeFisica;
+import br.com.healthtrack.model.Usuario;
 
 public class OracleTipoAtividadeFisicaDAO extends OracleBaseDAO<TipoAtividadeFisica> implements TipoAtividadeFisicaDAO {
 
@@ -15,7 +16,7 @@ public class OracleTipoAtividadeFisicaDAO extends OracleBaseDAO<TipoAtividadeFis
 	}	
 	
 	@Override
-	public ArrayList<TipoAtividadeFisica> obterTodos() {
+	public ArrayList<TipoAtividadeFisica> obterTodos(Usuario usuario) {
 		ArrayList<TipoAtividadeFisica> tiposAtividadeFisica = new ArrayList<TipoAtividadeFisica>();
 		
 		try {

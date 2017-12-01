@@ -24,7 +24,7 @@
 		</div>
 		<div class="form-group">
 			<label for="dataPesoEdicao">Data</label> 
-			<input type="text" class="form-control tipoCalendario" id="data" name="data" value="${peso.getData() }" required>
+			<input type="text" class="form-control tipoCalendario" id="data" name="data" value='<fmt:formatDate value="${peso.getData().time }" pattern="dd-MM-yyyy"/>' required>
 		</div>
 		<div class="modal-footer">
 			<c:url value="peso" var="link">

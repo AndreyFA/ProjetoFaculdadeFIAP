@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import br.com.healthtrack.dao.interfaces.TipoRefeicaoDAO;
 import br.com.healthtrack.model.TipoRefeicao;
+import br.com.healthtrack.model.Usuario;
 
 public class OracleTipoRefeicaoDAO extends OracleBaseDAO<TipoRefeicao> implements TipoRefeicaoDAO {
 
@@ -15,7 +16,7 @@ public class OracleTipoRefeicaoDAO extends OracleBaseDAO<TipoRefeicao> implement
 	}
 	
 	@Override
-	public ArrayList<TipoRefeicao> obterTodos() {
+	public ArrayList<TipoRefeicao> obterTodos(Usuario usuario) {
 		ArrayList<TipoRefeicao> tiposRefeicao = new ArrayList<TipoRefeicao>();
 		
 		try {

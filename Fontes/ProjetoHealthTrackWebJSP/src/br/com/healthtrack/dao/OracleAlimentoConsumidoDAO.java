@@ -9,6 +9,7 @@ import java.util.Calendar;
 
 import br.com.healthtrack.dao.interfaces.AlimentoConsumidoDAO;
 import br.com.healthtrack.model.AlimentoConsumido;
+import br.com.healthtrack.model.Usuario;
 
 public class OracleAlimentoConsumidoDAO extends OracleBaseDAO<AlimentoConsumido> implements AlimentoConsumidoDAO {
 	
@@ -17,7 +18,7 @@ public class OracleAlimentoConsumidoDAO extends OracleBaseDAO<AlimentoConsumido>
 	}
 	
 	@Override
-	public ArrayList<AlimentoConsumido> obterTodos() {
+	public ArrayList<AlimentoConsumido> obterTodos(Usuario usuario) {
 		
 		ArrayList<AlimentoConsumido> alimentosConsumidos = new ArrayList<AlimentoConsumido>();
 		
@@ -25,9 +26,12 @@ public class OracleAlimentoConsumidoDAO extends OracleBaseDAO<AlimentoConsumido>
 			
 			String sql = ""
 					+ "SELECT * "
-					+ "FROM T_HLT_ALIMENTO_CONSUMIDO";
+					+ "FROM T_HLT_ALIMENTO_CONSUMIDO "
+					+ "WHERE CD_USUARIO = ?";
 			
 			PreparedStatement statement = super.getConnection().prepareStatement(sql);
+			statement.setInt(1, usuario.getCodigo());
+			
 			ResultSet resultSet = super.executarBusca(statement);
 			
 			while(resultSet.next()) {				

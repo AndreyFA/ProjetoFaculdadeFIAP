@@ -9,6 +9,7 @@ import java.util.Calendar;
 
 import br.com.healthtrack.dao.interfaces.AtividadeFisicaDAO;
 import br.com.healthtrack.model.AtividadeFisica;
+import br.com.healthtrack.model.Usuario;
 
 public class OracleAtividadeFisicaDAO extends OracleBaseDAO<AtividadeFisica> implements AtividadeFisicaDAO {
 
@@ -17,15 +18,18 @@ public class OracleAtividadeFisicaDAO extends OracleBaseDAO<AtividadeFisica> imp
 	}
 	
 	@Override
-	public ArrayList<AtividadeFisica> obterTodos() {
+	public ArrayList<AtividadeFisica> obterTodos(Usuario usuario) {
 		ArrayList<AtividadeFisica> atividadesFisicas = new ArrayList<AtividadeFisica>();		
 		
 		try {
 			String sql = ""
 					+ "SELECT * "
-					+ "FROM T_HLT_ATIVIDADE_FISICA";
+					+ "FROM T_HLT_ATIVIDADE_FISICA "
+					+ "WHERE CD_USUARIO = ?";
 			
 			PreparedStatement statement = super.getConnection().prepareStatement(sql);
+			statement.setInt(1, usuario.getCodigo());
+			
 			ResultSet resultSet = super.executarBusca(statement);
 			
 			while (resultSet.next()) {

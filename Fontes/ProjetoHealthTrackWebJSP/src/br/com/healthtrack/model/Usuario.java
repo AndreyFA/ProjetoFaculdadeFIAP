@@ -2,6 +2,8 @@ package br.com.healthtrack.model;
 
 import java.io.Serializable;
 import java.security.InvalidParameterException;
+import java.time.LocalDate;
+import java.time.Year;
 import java.util.Calendar;
 
 /***
@@ -204,12 +206,20 @@ public class Usuario extends Persistivel<Usuario> implements Serializable {
 		this.senha = senha;
 	}
 	
-	public boolean alterarSenha(String novaSenha) throws InvalidParameterException {
-		/*
-		 * TODO: Validar a nova senha com uma expressão regular.
-		 */
+	public void verificarNovaSenha(String senha, String novaSenha, String confirmacaoNovaSenha) throws InvalidParameterException {
 		
-		setSenha(novaSenha);
-		return this.senha == novaSenha;	
+		if (!this.getSenha().equals(senha))
+			throw new InvalidParameterException("Sua senha atual não confere com a cadastrada!");
+		
+		if (!novaSenha.equals(confirmacaoNovaSenha))
+			throw new InvalidParameterException("Senhas não conferem!");
+	}
+	
+	/***
+	 * Retorna a idade atual do usuário.
+	 * @return Idade atual do usuário.
+	 */
+	public int obterIdadeAtual() {
+		return Year.now().getValue() - this.getDataNascimento().get(Calendar.YEAR);
 	}
 }

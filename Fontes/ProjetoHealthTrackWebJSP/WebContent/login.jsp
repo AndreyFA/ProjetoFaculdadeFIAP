@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -20,9 +21,15 @@
 								<span class="fonte-titulo">HEALTH TRACK</span>
 							</div>
 							<div class="container-fluid">
+							<c:if test="${not empty mensagemSucesso}">
+								<div class="alert alert-success">${mensagemSucesso }</div>
+							</c:if>
+							<c:if test="${not empty mensagemErro}">
+								<div class="alert alert-danger">${mensagemErro }</div>
+							</c:if>
 								<div class="row">
 									<div class="col-md-12">
-										<form class="form-horizontal" action="login" method="post">
+										<form class="form-horizontal" action="dashboard" method="post">
 											<div class="form-group">
 												<label for="login">E-mail</label> 
 												<input type="email" class="form-control tipoEmail" id="login" name="email" required>

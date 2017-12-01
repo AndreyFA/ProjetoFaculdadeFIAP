@@ -16,6 +16,8 @@ public abstract class BaseController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	protected UsuarioDAO usuarioDao;
+	protected String mensagemSucesso = "Processo realizado com sucesso!";
+	protected String mensagemErro = "Ocorrem falhas. Entre em contato com o suporte!";
 	
 	public BaseController() {
 		this.usuarioDao = DAOFactory.getUsuarioDAO();
@@ -31,6 +33,7 @@ public abstract class BaseController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Usuario usuario = this.obterUsuario(req);
+		String mensagem = req.getParameter("mensagem");
 		
 		switch (req.getParameter("opcao")) {
 			case "editar": {
@@ -42,7 +45,7 @@ public abstract class BaseController extends HttpServlet {
 				break;
 			}
 			case "listar": {
-				listar(req, resp, usuario);
+				listar(req, resp, usuario, mensagem);
 				break;
 			}
 		}
@@ -72,7 +75,7 @@ public abstract class BaseController extends HttpServlet {
 	
 	protected abstract void abrirFormularioCadastro(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException;
 	
-	protected abstract void listar(HttpServletRequest req, HttpServletResponse resp, Usuario usuario) throws ServletException, IOException;
+	protected abstract void listar(HttpServletRequest req, HttpServletResponse resp, Usuario usuario, String mensagem) throws ServletException, IOException;
 	
 	protected abstract void cadastrar(HttpServletRequest req, HttpServletResponse resp, Usuario usuario) throws ServletException, IOException;
 	

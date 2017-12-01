@@ -36,14 +36,7 @@
 		                    </div>                        
 		                </div>
 	                </form>                
-	            </div>
-	            <div class="col-md-12">
-	            	<c:if test="${not empty senha }">
-	            		<span>
-	            			${senha }
-	            		</span>
-	            	</c:if>
-	            </div>               
+	            </div>              
 	        </div>
 	    </div>  
 	    <%@ include file="loadScriptsJS.jsp" %>

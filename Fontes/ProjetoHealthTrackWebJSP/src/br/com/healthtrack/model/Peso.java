@@ -1,7 +1,7 @@
 package br.com.healthtrack.model;
 
 import java.security.InvalidParameterException;
-import java.time.LocalDate;
+import java.util.Calendar;
 
 /***
  * Classe que representa o peso do usuário.
@@ -20,7 +20,7 @@ public class Peso extends Persistivel<Peso>  {
 	/***
 	 * Data da pesagem.
 	 */
-	private LocalDate data;
+	private Calendar data;
 	
 	/***
 	 * Referência do usuário.
@@ -40,7 +40,7 @@ public class Peso extends Persistivel<Peso>  {
 	 * @param data Data da pesagem.
 	 * @param usuario Referência do usuário.
 	 */
-	public Peso(float peso, LocalDate data, Usuario usuario) {
+	public Peso(float peso, Calendar data, Usuario usuario) {
 		setPeso(peso);
 		setData(data);
 		setUsuario(usuario);
@@ -72,7 +72,7 @@ public class Peso extends Persistivel<Peso>  {
 	 * Retorna a data da pesagem.
 	 * @return Data da pesagem.
 	 */
-	public LocalDate getData() {
+	public Calendar getData() {
 		return data;
 	}
 	
@@ -81,7 +81,7 @@ public class Peso extends Persistivel<Peso>  {
 	 * @param data Data da pesagem.
 	 * @throws InvalidParameterException Não é permitido uma data nula.
 	 */
-	public void setData(LocalDate data) throws InvalidParameterException {
+	public void setData(Calendar data) throws InvalidParameterException {
 		
 		if(data == null) {
 			throw new InvalidParameterException("Informe uma data válida.");

@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +34,7 @@ public class AtividadeFisicaServlet extends BaseController {
 	
 	
 	private void carregarTipoDeAtividadesFisicas(HttpServletRequest req) {
-		List<TipoAtividadeFisica> tipoAtividadesFisicas = this.tipoAtividadeFisicaDao.obterTodos();		
+		List<TipoAtividadeFisica> tipoAtividadesFisicas = this.tipoAtividadeFisicaDao.obterTodos(null);		
 		req.setAttribute("tipoAtividadesFisicas", tipoAtividadesFisicas);
 	}
 
@@ -58,16 +57,23 @@ public class AtividadeFisicaServlet extends BaseController {
 	}
 
 	@Override
-	protected void listar(HttpServletRequest req, HttpServletResponse resp, Usuario usuario) throws ServletException, IOException {
-		List<AtividadeFisica> atividadesFisicas = this.atividadeFisicaDao.obterTodos();
+	protected void listar(HttpServletRequest req, HttpServletResponse resp, Usuario usuario, String mensagem) throws ServletException, IOException {
+		List<AtividadeFisica> atividadesFisicas = this.atividadeFisicaDao.obterTodos(usuario);
 		
 		req.setAttribute("atividadesFisicas", atividadesFisicas);
-		RequestDispatcher rd = req.getRequestDispatcher("atividadeFisica.jsp");		
-		rd.forward(req, resp);
+		
+		if(super.mensagemSucesso.equals(mensagem))		
+			req.setAttribute("mensagemSucesso", mensagem);
+		else
+			req.setAttribute("mensagemErro", mensagem);
+		
+		req.getRequestDispatcher("atividadeFisica.jsp").forward(req, resp);
 	}
 
 	@Override
 	protected void cadastrar(HttpServletRequest req, HttpServletResponse resp, Usuario usuario) throws ServletException, IOException {
+		
+		String mensagem = super.mensagemSucesso;
 		
 		try {
 			int calorias = Integer.parseInt(req.getParameter("calorias"));		
@@ -86,15 +92,18 @@ public class AtividadeFisicaServlet extends BaseController {
 			
 			this.atividadeFisicaDao.cadastrar(new AtividadeFisica(calorias, data, horario, descricao, tipo, usuario));		
 			
-			listar(req, resp, usuario);
 		} catch(Exception e) {
 			e.printStackTrace();
-			req.setAttribute("erro", "Falha ao cadastrar.");
-		}		
+			mensagem = super.mensagemErro;
+		}
+		
+		listar(req, resp, usuario, mensagem);
 	}
 
 	@Override
 	protected void editar(HttpServletRequest req, HttpServletResponse resp, Usuario usuario) throws ServletException, IOException {
+		
+		String mensagem = super.mensagemSucesso;
 		
 		try {
 			int codigo = Integer.parseInt(req.getParameter("codigo"));
@@ -120,19 +129,28 @@ public class AtividadeFisicaServlet extends BaseController {
 			
 			this.atividadeFisicaDao.atualizar(atividadeFisica);		
 			
-			listar(req, resp, usuario);
 		} catch(Exception e) {
 			e.printStackTrace();
-			req.setAttribute("erro", "Falha ao editar.");
+			mensagem = super.mensagemErro;
 		}
+		
+		listar(req, resp, usuario, mensagem);
 		
 	}
 
 	@Override
 	protected void excluir(HttpServletRequest req, HttpServletResponse resp, Usuario usuario) throws ServletException, IOException {
-		int codigo = Integer.parseInt(req.getParameter("codigo"));
-		this.atividadeFisicaDao.deletar(codigo);
 		
-		listar(req, resp, usuario);
+		String mensagem = super.mensagemSucesso;
+		
+		try {
+			int codigo = Integer.parseInt(req.getParameter("codigo"));
+			this.atividadeFisicaDao.deletar(codigo);
+		} catch (Exception e) {
+			e.printStackTrace();
+			mensagem = super.mensagemErro;
+		}	
+		
+		listar(req, resp, usuario, mensagem);
 	}
 }

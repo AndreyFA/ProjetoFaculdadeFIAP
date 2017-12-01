@@ -3,6 +3,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="loadPageHeader.jsp"%>
 <div class="container-fluid conteudo">
+	<c:if test="${not empty mensagemSucesso}">
+		<div class="alert alert-success">${mensagemSucesso }</div>
+	</c:if>
+	<c:if test="${not empty mensagemErro}">
+		<div class="alert alert-danger">${mensagemErro }</div>
+	</c:if>
 	<ol class="breadcrumb">
 		<li><a href="dashboard.jsp">Dashboard</a></li>
 		<li class="active">Minhas atividades físicas</li>

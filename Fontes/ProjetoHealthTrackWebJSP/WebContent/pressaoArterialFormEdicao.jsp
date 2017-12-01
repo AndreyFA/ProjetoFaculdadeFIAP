@@ -28,7 +28,7 @@
 		</div>
 		<div class="form-group">
 			<label for="dataInclusao">Data</label> 
-			<input type="text" class="form-control tipoCalendario" id="dataEdicao" name="data" value="${pressaoArterial.getData() }" required>
+			<input type="text" class="form-control tipoCalendario" id="dataEdicao" name="data" value='<fmt:formatDate value="${pressaoArterial.getData().time }" pattern="dd-MM-yyyy"/>' required>
 		</div>
 		<div class="modal-footer">
 			<c:url value="pressaoArterial" var="link">

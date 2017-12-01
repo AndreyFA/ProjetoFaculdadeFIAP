@@ -2,7 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="loadPageHeader.jsp"%>
+
 <div class="container-fluid conteudo">
+	<c:if test="${not empty mensagemSucesso}">
+		<div class="alert alert-success">${mensagemSucesso }</div>
+	</c:if>
+	<c:if test="${not empty mensagemErro}">
+		<div class="alert alert-danger">${mensagemErro }</div>
+	</c:if>
 	<ol class="breadcrumb">
 		<li><a href="dashboard.jsp">Dashboard</a></li>
 		<li class="active">Minha pressão</li>
@@ -33,7 +40,9 @@
 							<tr>
 								<td class="text-center">${p.getPressaoSistolica() }</td>
 								<td class="text-center">${p.getPressaoDiastolica() }</td>
-								<td class="text-center">${p.getData() }</td>
+								<td class="text-center">
+									<fmt:formatDate value="${p.getData().time }" pattern="dd-MM-yyyy"/> 
+								</td>
 								<td class="text-center">${p.getSituacao() }</td>
 								<td align="center">
 									<c:url value="pressaoArterial" var="link">
@@ -58,19 +67,6 @@
 				<c:param name="opcao" value="cadastrar" />
 			</c:url>
 			<a class="btn btn-primary" href="${link }">Nova pressão</a>
-		</div>
-		<div class="col-md-3 col-md-offset-8">
-			<nav aria-label="...">
-				<ul class="pagination">
-					<li class="disabled"><a href="#" aria-label="Previous"><span
-							aria-hidden="true">&laquo;</span></a></li>
-					<li><a href="#">1 <span class="sr-only">(current)</span></a></li>
-					<li><a href="#">2 <span class="sr-only">(current)</span></a></li>
-					<li><a href="#">3 <span class="sr-only">(current)</span></a></li>
-					<li><a href="#">4 <span class="sr-only">(current)</span></a></li>
-					<li><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
-				</ul>
-			</nav>
 		</div>
 	</div>
 </div>

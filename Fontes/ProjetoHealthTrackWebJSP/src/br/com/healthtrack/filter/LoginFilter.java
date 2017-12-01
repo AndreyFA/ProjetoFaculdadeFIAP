@@ -40,9 +40,13 @@ public class LoginFilter implements Filter {
 		HttpSession session = req.getSession();
 		String url = req.getRequestURI();
 
-		if (session.getAttribute("codigoUsuario") == null && !url.endsWith("login") && !url.contains("resources") 
-				&& !url.contains("novoUsuario") && !url.contains("recuperarSenha") && !url.contains("exibirSenhaRecuperada")) {
-			request.setAttribute("erro", "Entre com o usuário e senha.");
+		if (session.getAttribute("codigoUsuario") == null 
+				&& !url.endsWith("login") 
+				&& !url.contains("resources") 
+				&& !url.contains("novoUsuario") 
+				&& !url.contains("recuperarSenha") 
+				&& !url.contains("exibirSenhaRecuperada")) {
+			request.setAttribute("mensagemErro", "Entre com o usuário e senha.");
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 		} else {
 			chain.doFilter(request, response);
