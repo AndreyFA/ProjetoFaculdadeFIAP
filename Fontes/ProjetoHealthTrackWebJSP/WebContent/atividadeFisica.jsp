@@ -44,7 +44,7 @@
 									<fmt:formatDate type="date" value="${a.getData().time }" pattern="dd-MM-yyyy"/> 
 								</td>
 								<td class="text-center">
-									<fmt:formatDate type="time" value="${a.getHorario() }" pattern="hh:mm"/> 
+									<fmt:formatDate type="time" value="${a.getHorario() }" pattern="HH:mm"/> 
 								</td>
 								<td class="text-center">${a.getDescricao() }</td>
 								<td align="center">

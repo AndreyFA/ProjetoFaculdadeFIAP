@@ -27,7 +27,8 @@ public class OracleAlimentoConsumidoDAO extends OracleBaseDAO<AlimentoConsumido>
 			String sql = ""
 					+ "SELECT * "
 					+ "FROM T_HLT_ALIMENTO_CONSUMIDO "
-					+ "WHERE CD_USUARIO = ?";
+					+ "WHERE CD_USUARIO = ? "
+					+ "ORDER BY CD_ALIMENTO_CONSUMIDO DESC";
 			
 			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setInt(1, usuario.getCodigo());

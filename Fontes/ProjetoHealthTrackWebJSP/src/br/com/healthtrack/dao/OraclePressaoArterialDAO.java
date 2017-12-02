@@ -25,7 +25,8 @@ public class OraclePressaoArterialDAO extends OracleBaseDAO<PressaoArterial> imp
 			String sql = ""
 					+ "SELECT * "
 					+ "FROM T_HLT_PRESSAO_ARTERIAL "
-					+ "WHERE CD_USUARIO = ?";
+					+ "WHERE CD_USUARIO = ? "
+					+ "ORDER BY CD_PRESSAO_ARTERIAL DESC";
 			
 			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setInt(1, usuario.getCodigo());
@@ -208,7 +209,7 @@ public class OraclePressaoArterialDAO extends OracleBaseDAO<PressaoArterial> imp
 					+ "FROM T_HLT_PRESSAO_ARTERIAL "
 					+ "WHERE ROWNUM = 1 "
 					+ "  AND CD_USUARIO = ? "
-					+ "ORDER BY DT_MEDICAO DESC";
+					+ "ORDER BY CD_PRESSAO_ARTERIAL DESC";
 			
 			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setInt(1, usuario.getCodigo());

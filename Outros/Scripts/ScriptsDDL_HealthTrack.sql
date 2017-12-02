@@ -134,6 +134,3 @@ START WITH 1
 MAXVALUE 99999999
 NOCACHE
 NOCYCLE;
-
-
-select * from t_hlt_peso

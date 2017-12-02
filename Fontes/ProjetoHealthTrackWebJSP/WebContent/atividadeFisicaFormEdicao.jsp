@@ -41,7 +41,7 @@
 		</div>
 		<div class="form-group">
 			<label for="horarioInclusao">Horário</label>
-			<input type="text" class="form-control tipoHorario" id="horarioInclusao" name="horario" value='<fmt:formatDate type="time" value="${atividadeFisica.getHorario() }" pattern="hh:mm"/>' required>
+			<input type="text" class="form-control tipoHorario" id="horarioInclusao" name="horario" value='<fmt:formatDate type="time" value="${atividadeFisica.getHorario() }" pattern="HH:mm"/>' required>
 		</div>
 		<div class="form-group">
 			<label for="descricaoInclusao">Descrição</label>

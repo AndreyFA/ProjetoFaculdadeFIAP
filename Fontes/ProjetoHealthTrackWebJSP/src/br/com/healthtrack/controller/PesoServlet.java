@@ -24,6 +24,7 @@ public class PesoServlet extends BaseController {
 
 	@Override
 	public void init() throws ServletException {
+		super.init();
 		this.pesoDao = DAOFactory.getPesoDAO();
 	}	
 

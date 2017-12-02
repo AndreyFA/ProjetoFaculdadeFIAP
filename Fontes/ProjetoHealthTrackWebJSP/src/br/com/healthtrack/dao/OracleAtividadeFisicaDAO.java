@@ -25,7 +25,8 @@ public class OracleAtividadeFisicaDAO extends OracleBaseDAO<AtividadeFisica> imp
 			String sql = ""
 					+ "SELECT * "
 					+ "FROM T_HLT_ATIVIDADE_FISICA "
-					+ "WHERE CD_USUARIO = ?";
+					+ "WHERE CD_USUARIO = ? "
+					+ "ORDER BY CD_ATIVIDADE_FISICA DESC";
 			
 			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setInt(1, usuario.getCodigo());
@@ -194,7 +195,7 @@ public class OracleAtividadeFisicaDAO extends OracleBaseDAO<AtividadeFisica> imp
 	public void deletar(int id) {
 		try {
 			String sql = ""
-					+ "DELETE FRO T_HLT_ATIVIDADE_FISICA "
+					+ "DELETE FROM T_HLT_ATIVIDADE_FISICA "
 					+ "WHERE CD_ATIVIDADE_FISICA = ?";
 			
 			PreparedStatement statement = super.getConnection().prepareStatement(sql);

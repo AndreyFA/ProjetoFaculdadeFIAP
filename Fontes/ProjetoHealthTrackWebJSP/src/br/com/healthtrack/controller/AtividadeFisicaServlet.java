@@ -28,6 +28,7 @@ public class AtividadeFisicaServlet extends BaseController {
 	
 	@Override
 	public void init() throws ServletException {
+		super.init();
 		this.atividadeFisicaDao = DAOFactory.getAtividadeFisicaDAO();
 		this.tipoAtividadeFisicaDao = DAOFactory.getTipoAtividadeFisicaDAO();
 	}

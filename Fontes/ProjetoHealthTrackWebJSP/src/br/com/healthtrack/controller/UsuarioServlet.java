@@ -26,6 +26,7 @@ public class UsuarioServlet extends HttpServlet {
 	
 	@Override
 	public void init() throws ServletException {
+		super.init();
 		this.usuarioDao = DAOFactory.getUsuarioDAO();
 	}
 	
@@ -84,7 +85,7 @@ public class UsuarioServlet extends HttpServlet {
 			case "recuperarSenha":
 				recuperarSenha(req, resp);
 				break;
-		}		
+		}
 	}
 	
 	private void editar(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -164,11 +165,10 @@ public class UsuarioServlet extends HttpServlet {
 		else
 			req.setAttribute("mensagemErro", mensagem);
 		
-		req.setAttribute("", arg1);
 		req.getRequestDispatcher("login.jsp").forward(req, resp);
 	}
 	
-	private void recuperarSenha(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public void recuperarSenha(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		try {
 			
@@ -179,8 +179,7 @@ public class UsuarioServlet extends HttpServlet {
 			
 			String senha = this.usuarioDao.obterSenhaPorEmail(email);
 			
-			req.setAttribute("senha", senha);
-			req.getRequestDispatcher("exibirSenhaRecuperada.jsp").forward(req, resp);
+			// TODO: Enviar um e-mail para o usuário.
 			
 		} catch(Exception e) {
 			e.printStackTrace();

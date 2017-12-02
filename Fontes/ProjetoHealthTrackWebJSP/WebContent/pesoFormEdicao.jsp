@@ -20,7 +20,7 @@
 		<input type="hidden" value="${peso.getCodigo() }" name="codigo" />
 		<div class="form-group">
 			<label for="pesoEdicao">Peso</label> 
-			<input type="text" class="form-control tipoNumerico" id="peso" name="peso" value="${peso.getPeso() }" required>
+			<input type="text" class="form-control tipoNumerico" id="peso" name="peso" value='<fmt:formatNumber type="number" maxFractionDigits="0" value="${peso.getPeso() }" />' required>
 		</div>
 		<div class="form-group">
 			<label for="dataPesoEdicao">Data</label> 

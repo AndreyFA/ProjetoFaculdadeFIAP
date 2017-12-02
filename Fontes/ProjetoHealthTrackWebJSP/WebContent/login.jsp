@@ -52,11 +52,6 @@
 											É novo por aqui? <a href="novoUsuario.jsp"> Cadastre-se </a>
 										</div>
 									</div>
-									<div class="row">
-										<div class="col-md-12 text-right">
-											<a href="recuperarSenha.jsp">Esqueci minha senha</a>
-										</div>
-									</div>
 								</div>
 							</div>
 						</div>

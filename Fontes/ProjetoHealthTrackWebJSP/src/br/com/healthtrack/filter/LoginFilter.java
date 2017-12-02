@@ -44,8 +44,7 @@ public class LoginFilter implements Filter {
 				&& !url.endsWith("login") 
 				&& !url.contains("resources") 
 				&& !url.contains("novoUsuario") 
-				&& !url.contains("recuperarSenha") 
-				&& !url.contains("exibirSenhaRecuperada")) {
+				&& !url.contains("recuperarSenha")) {
 			request.setAttribute("mensagemErro", "Entre com o usuário e senha.");
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 		} else {

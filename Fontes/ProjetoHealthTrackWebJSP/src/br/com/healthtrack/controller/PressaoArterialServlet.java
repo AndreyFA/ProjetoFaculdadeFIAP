@@ -23,6 +23,7 @@ public class PressaoArterialServlet extends BaseController {
 
 	@Override
 	public void init() throws ServletException {
+		super.init();
 		this.pressaoArterialDao = DAOFactory.getPressaoArterialDAO();
 	}
 

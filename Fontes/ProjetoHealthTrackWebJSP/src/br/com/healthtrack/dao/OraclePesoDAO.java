@@ -25,7 +25,8 @@ public class OraclePesoDAO extends OracleBaseDAO<Peso> implements PesoDAO {
 			String sql = ""
 					+ "SELECT * "
 					+ "FROM T_HLT_PESO "
-					+ "WHERE CD_USUARIO = ?";
+					+ "WHERE CD_USUARIO = ? "
+					+ "ORDER BY CD_PESO DESC";
 			
 			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setInt(1, usuario.getCodigo());
@@ -197,7 +198,7 @@ public class OraclePesoDAO extends OracleBaseDAO<Peso> implements PesoDAO {
 					+ "FROM T_HLT_PESO "
 					+ "WHERE ROWNUM = 1 "
 					+ "  AND CD_USUARIO = ? "
-					+ "ORDER BY DT_PESO DESC";
+					+ "ORDER BY CD_PESO DESC";
 			
 			PreparedStatement statement = super.getConnection().prepareStatement(sql);
 			statement.setInt(1, usuario.getCodigo());

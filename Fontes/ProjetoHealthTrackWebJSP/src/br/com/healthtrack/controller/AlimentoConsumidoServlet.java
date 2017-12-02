@@ -26,6 +26,7 @@ public class AlimentoConsumidoServlet extends BaseController {
 
 	@Override
 	public void init() throws ServletException {
+		super.init();
 		this.alimentoConsumidoDao = DAOFactory.getAlimentoConsumidoDAO();
 		this.tipoRefeicaoDao = DAOFactory.getTipoRefeicaoDAO();
 	}	

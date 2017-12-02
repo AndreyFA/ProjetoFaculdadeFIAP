@@ -27,6 +27,7 @@ public class DashboardServlet extends HttpServlet {
 	
 	@Override
 	public void init() throws ServletException {
+		super.init();
 		this.usuarioDao = DAOFactory.getUsuarioDAO();
 		this.pesoDao = DAOFactory.getPesoDAO();
 		this.pressaoArterialDao = DAOFactory.getPressaoArterialDAO();
@@ -99,6 +100,27 @@ public class DashboardServlet extends HttpServlet {
 	}
 	
 	private String obterSituacaoIMC(float imc) {
-		return "Normal";
+		
+		if (imc <= 18.5F) {
+		 return "Abaixo do peso.";
+		}
+		
+		if (imc > 18.5F && imc <= 24.9) {
+			return "Peso ideal (parabéns).";
+		}
+		
+		if (imc > 24.9F && imc <= 29.9F) {
+			return "Levemente acima do peso.";
+		}
+		
+		if (imc > 29.9F && imc <= 34.9F) {
+			return "Obesidade grau 1.";
+		}
+		
+		if (imc > 34.9F && imc <= 39.9F) {
+			return "Obesidade grau 2 (severa).";
+		}
+		
+		return "Obesidade grau 3 (mórbida).";
 	}
 }
